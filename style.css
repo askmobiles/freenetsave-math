@@ -7,7 +7,7 @@ a{color:var(--blue-d)}
 button,select{font:inherit;cursor:pointer;color:inherit}
 button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .hd{background:#fff;border-bottom:1px solid var(--line)}
-.hd-in{max-width:920px;margin:0 auto;padding:12px 4%;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.hd-in{max-width:1240px;margin:0 auto;padding:12px 4%;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
 .logo svg{width:38px;height:38px}
 .logo span{font-size:24px;font-weight:850;letter-spacing:-.04em;color:var(--navy)}
@@ -17,7 +17,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .hd nav a:hover{background:var(--soft);color:var(--blue-d)}
 .hd nav a.cta{background:var(--orange);color:#fff}
 .hd nav a.cta:hover{background:var(--orange-d)}
-main{max-width:920px;margin:0 auto;padding:26px 4% 56px}
+main{max-width:1240px;margin:0 auto;padding:26px 4% 56px}
 .hero{margin:10px 0 26px}
 .hero h1{font-size:clamp(28px,4vw,44px);line-height:1.05;letter-spacing:-.035em;font-weight:850;margin:0 0 8px}
 .hero p{margin:0;color:var(--muted);font-size:17px}
@@ -132,7 +132,7 @@ main{max-width:920px;margin:0 auto;padding:26px 4% 56px}
 .sh-foot{margin-top:18px;font-size:12.5px;color:#444;text-align:center}
 .note{margin:26px 0 0;font-size:15px;color:var(--muted)}
 .ft{background:var(--navy);color:#c7d0e0;font-size:15px}
-.ft-in{max-width:920px;margin:0 auto;padding:26px 4%;display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between}
+.ft-in{max-width:1240px;margin:0 auto;padding:26px 4%;display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between}
 .ft a{color:#c7d0e0;text-decoration:none;margin-right:16px}
 .ft a:hover{color:#fff}
 @media (max-width:860px){
@@ -271,3 +271,6 @@ main{max-width:920px;margin:0 auto;padding:26px 4% 56px}
 .fns-lang{font:inherit;font-size:15px;font-weight:650;color:#172033;background:#fff;border:2px solid #dde5f2;border-radius:10px;padding:8px 10px;max-width:170px;width:auto;cursor:pointer}.fns-lang:hover{border-color:#2563eb}
 .hd nav{align-items:center}
 @media (max-width:599px){.fns-lang{max-width:140px;padding:7px 6px;font-size:14px}}
+
+@media (min-width:1100px){.tgrid{grid-template-columns:repeat(auto-fill,minmax(270px,1fr))}.hero h1{font-size:52px}.steps{max-width:760px}}
+@media (min-width:1300px){main,.hd-in,.ft-in{padding-left:24px;padding-right:24px}}
