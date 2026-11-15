@@ -3,91 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Free Math Practice, Grades 1 to 12 | freenetsave</title>
-<meta name="description" content="Free math practice for Grades 1 to 12. Pick a grade and a topic, answer 10 questions with the number pad, and see how each one is worked out. No sign-up, nothing saved.">
+<title>Free Math Practice, Grades 1 to 12: Questions, Worksheets, Challenges | freenetsave</title>
+<meta name="description" content="Free math practice for Grades 1 to 12. Pick a grade and topic, then practice, race the clock in a fun challenge, or print a worksheet with an answer key. No sign-up, nothing saved.">
 <link rel="canonical" href="https://math.freenetsave.com/">
-<style>
-:root{--blue:#2563eb;--blue-d:#1d4ed8;--orange:#f97316;--orange-d:#c2410c;--navy:#172033;--bg:#f8fafc;--line:#dde5f2;--soft:#eaf1ff;--muted:#5b6b85;--good:#15803d;--good-bg:#dcfce7;--bad:#b91c1c;--bad-bg:#fee2e2}
-*{box-sizing:border-box}
-html,body{margin:0}
-body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--navy);line-height:1.5;font-size:18px}
-a{color:var(--blue-d)}
-:focus-visible{outline:3px solid var(--orange);outline-offset:3px;border-radius:10px}
-button{font:inherit;cursor:pointer}
-.hd{background:#fff;border-bottom:1px solid var(--line)}
-.hd-in{max-width:1080px;margin:0 auto;padding:14px 4%;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-.logo svg{width:38px;height:38px}
-.logo span{font-size:24px;font-weight:850;letter-spacing:-.04em;color:var(--navy)}
-.logo b{color:var(--blue);font-weight:850}
-.hd nav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
-.hd nav a{text-decoration:none;color:var(--navy);font-weight:650;font-size:16px;padding:9px 13px;border-radius:10px}
-.hd nav a:hover{background:var(--soft);color:var(--blue-d)}
-.hd nav a.cta{background:var(--orange);color:#fff}
-.hd nav a.cta:hover{background:var(--orange-d)}
-main{max-width:1080px;margin:0 auto;padding:28px 4% 56px}
-.hero{display:flex;flex-wrap:wrap;gap:16px 40px;align-items:flex-end;margin-bottom:24px}
-.hero h1{font-size:clamp(34px,5.4vw,56px);line-height:1;letter-spacing:-.04em;font-weight:850;margin:0;flex:1 1 420px}
-.hero p{margin:0;flex:1 1 300px;color:var(--muted);font-size:17px}
-.panel{background:#fff;border:1px solid var(--line);border-radius:24px;padding:24px}
-.lab{font-weight:750;font-size:16px;margin:0 0 10px}
-.grades{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
-.grades button{min-width:52px;height:48px;border-radius:14px;border:2px solid var(--line);background:#fff;font-weight:750;font-size:17px;color:var(--navy)}
-.grades button:hover{border-color:var(--blue)}
-.grades button[aria-pressed=true]{background:var(--blue);border-color:var(--blue);color:#fff}
-.topics{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
-.topics button{text-align:left;border:2px solid var(--line);background:#fff;border-radius:16px;padding:14px 16px;color:var(--navy)}
-.topics button:hover{border-color:var(--blue);background:var(--soft)}
-.topics b{display:block;font-size:17px}
-.topics span{font-size:14px;color:var(--muted)}
-.play{display:none}
-.play.on{display:grid;grid-template-columns:1.2fr 1fr;gap:20px;align-items:start}
-.top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
-.top .back{border:0;background:none;color:var(--blue-d);font-weight:700;padding:6px 0}
-.top .tag{font-size:14px;font-weight:700;background:var(--soft);color:var(--blue-d);border-radius:999px;padding:4px 12px}
-.dots{display:flex;gap:6px;margin-left:auto}
-.dots i{width:12px;height:12px;border-radius:50%;background:var(--line)}
-.dots i.ok{background:var(--good)}
-.dots i.no{background:#ef4444}
-.dots i.now{outline:2px solid var(--blue);outline-offset:2px}
-.qcard{background:var(--navy);color:#fff;border-radius:24px;padding:28px;min-height:260px;display:flex;flex-direction:column}
-.qn{font-size:14px;color:#c7d0e0;font-weight:650;margin:0}
-.q{font-size:clamp(28px,4.6vw,44px);font-weight:800;letter-spacing:-.02em;line-height:1.2;margin:14px 0 18px;word-break:break-word}
-.q small{display:block;font-size:17px;font-weight:600;color:#c7d0e0;letter-spacing:0;margin-top:8px}
-.ans{margin-top:auto;background:#fff;color:var(--navy);border-radius:16px;min-height:64px;padding:10px 18px;font-size:34px;font-weight:800;display:flex;align-items:center;letter-spacing:.02em}
-.ans:empty:before{content:"Your answer";color:#9aa6bd;font-size:20px;font-weight:600;letter-spacing:0}
-.fb{margin-top:14px;border-radius:16px;padding:14px 16px;font-size:16px;display:none}
-.fb.ok{display:block;background:var(--good-bg);color:#14532d}
-.fb.no{display:block;background:var(--bad-bg);color:#7f1d1d}
-.fb b{display:block;font-size:17px;margin-bottom:2px}
-.pad{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.pad button{height:64px;border-radius:16px;border:2px solid var(--line);background:#fff;font-size:26px;font-weight:750;color:var(--navy)}
-.pad button:hover{border-color:var(--blue);background:var(--soft)}
-.pad button:active{transform:translateY(1px)}
-.pad .wide{grid-column:span 2}
-.pad .go{background:var(--blue);border-color:var(--blue);color:#fff;font-size:20px}
-.pad .go:hover{background:var(--blue-d);border-color:var(--blue-d);color:#fff}
-.pad .soft{font-size:18px;color:var(--muted)}
-.tip{font-size:14px;color:var(--muted);margin:12px 0 0}
-.done{display:none;text-align:center;padding:40px 20px}
-.done.on{display:block}
-.done .big{font-size:72px;font-weight:850;letter-spacing:-.04em;line-height:1;color:var(--blue)}
-.done h2{font-size:30px;margin:12px 0 6px}
-.done p{color:var(--muted);margin:0 0 22px}
-.done .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.btn{border:0;border-radius:999px;padding:14px 22px;font-weight:700;font-size:17px}
-.btn.p{background:var(--orange);color:#fff}
-.btn.p:hover{background:var(--orange-d)}
-.btn.s{background:var(--soft);color:var(--blue-d)}
-.note{margin:28px 0 0;font-size:15px;color:var(--muted)}
-.ft{background:var(--navy);color:#c7d0e0;font-size:15px}
-.ft-in{max-width:1080px;margin:0 auto;padding:26px 4%;display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between}
-.ft a{color:#c7d0e0;text-decoration:none;margin-right:16px}
-.ft a:hover{color:#fff}
-@media (max-width:820px){.play.on{grid-template-columns:1fr}.qcard{min-height:0}}
-@media (max-width:480px){.panel{padding:18px;border-radius:20px}.pad button{height:58px}.hd nav a{padding:8px 10px;font-size:15px}}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
-</style>
+<meta name="theme-color" content="#2563eb">
+<link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
 <header class="hd"><div class="hd-in">
@@ -96,218 +16,76 @@ main{max-width:1080px;margin:0 auto;padding:28px 4% 56px}
 </div></header>
 
 <main>
-<section class="hero">
+<section class="hero" id="hero">
 <h1>Free math practice, Grades 1 to 12</h1>
-<p>Pick a grade and a topic. Answer 10 questions with the number pad. Every question shows how it's worked out. No sign-up, and nothing is saved.</p>
+<p>Pick a grade and a topic. Practice 10 questions, race the clock, or print a worksheet. No sign-up, and nothing is saved.</p>
 </section>
 
 <section class="panel" id="pick">
 <p class="lab" id="gLab">1. Pick a grade</p>
 <div class="grades" id="grades" role="group" aria-labelledby="gLab"></div>
-<p class="lab">2. Pick a topic</p>
-<div class="topics" id="topics"></div>
+
+<p class="lab" id="mLab">2. What do you want to do?</p>
+<div class="modes" id="modes" role="group" aria-labelledby="mLab">
+<button type="button" data-m="practice" aria-pressed="true"><b>Practice</b><span>10 questions, with how each is worked out</span></button>
+<button type="button" data-m="challenge" aria-pressed="false"><b>Fun challenge</b><span>60 seconds. How many can you get?</span></button>
+<button type="button" data-m="sheet" aria-pressed="false"><b>Print a worksheet</b><span>With an answer key</span></button>
+</div>
+
+<p class="lab">3. Pick a topic</p>
+<div id="topics"></div>
 </section>
 
-<section class="panel play" id="play" aria-live="polite">
+<section class="panel play" id="play">
 <div>
-<div class="top"><button class="back" id="back" type="button">← Topics</button><span class="tag" id="tag"></span><div class="dots" id="dots" aria-hidden="true"></div></div>
-<div class="qcard">
+<div class="top"><button class="back" id="back" type="button">← Topics</button><span class="tag" id="tag"></span><div class="dots" id="dots" aria-hidden="true"></div>
+<div class="hud" id="hud"><span class="clock" id="clock" aria-label="Seconds left">60</span><span class="pts"><b id="pts">0</b> points</span><span class="streak" id="streak"></span></div></div>
+<div class="bar" id="bar"><i id="barIn"></i></div>
+<div class="qcard" id="qcard">
 <p class="qn" id="qn"></p>
-<div class="q" id="q"></div>
+<div class="q" id="q" aria-live="polite"></div>
 <div class="ans" id="ans" aria-label="Your answer" role="status"></div>
 </div>
-<div class="fb" id="fb"></div>
+<div class="fb" id="fb" aria-live="polite"></div>
 </div>
 <div>
 <div class="pad" id="pad">
 <button type="button" data-k="7">7</button><button type="button" data-k="8">8</button><button type="button" data-k="9">9</button><button type="button" data-k="back" class="soft" aria-label="Delete">⌫</button>
 <button type="button" data-k="4">4</button><button type="button" data-k="5">5</button><button type="button" data-k="6">6</button><button type="button" data-k="-" aria-label="Minus">−</button>
 <button type="button" data-k="1">1</button><button type="button" data-k="2">2</button><button type="button" data-k="3">3</button><button type="button" data-k="." aria-label="Decimal point">.</button>
-<button type="button" data-k="0" class="wide">0</button><button type="button" data-k="go" class="wide go" id="go">Check</button>
+<button type="button" data-k="0">0</button><button type="button" data-k="/" aria-label="Fraction bar">/</button><button type="button" data-k="go" class="wide go" id="go">Check</button>
 </div>
-<p class="tip">You can also type on your keyboard and press Enter.</p>
+<p class="tip">You can also type on a keyboard and press Enter. For a fraction, use the / key, like 3/4.</p>
 </div>
 </section>
 
 <section class="panel done" id="done">
+<div class="stars" id="stars" aria-hidden="true"></div>
 <div class="big" id="score"></div>
 <h2 id="doneMsg"></h2>
 <p id="doneSub"></p>
-<div class="row"><button class="btn p" id="again" type="button">Try 10 more</button><button class="btn s" id="other" type="button">Pick another topic</button></div>
+<div class="row"><button class="btn p" id="again" type="button">Go again</button><button class="btn s" id="toSheet" type="button">Print a worksheet on this</button><button class="btn s" id="other" type="button">Pick another topic</button></div>
+<div class="review" id="review"></div>
 </section>
 
-<p class="note">New questions every time. Questions are made on your device, so nothing you type leaves it.</p>
+<section class="sheetwrap" id="sheetwrap">
+<div class="panel sheetbar" id="sheetbar">
+<button class="back" id="sback" type="button">← Topics</button>
+<label>Questions <select id="sn"><option>10</option><option selected>20</option><option>30</option><option>40</option></select></label>
+<label class="chk"><input type="checkbox" id="skey" checked> Answer key</label>
+<label class="chk"><input type="checkbox" id="swork"> Space to show work</label>
+<button class="btn s" id="snew" type="button">New questions</button>
+<button class="btn p" id="sprint" type="button">Print</button>
+</div>
+<article class="sheet" id="sheet"></article>
+</section>
+
+<p class="note" id="note">New questions every time. They are made on your device, so nothing you type leaves it.</p>
 </main>
 
 <footer class="ft"><div class="ft-in"><div><a href="https://freenetsave.com/">freenetsave.com</a><a href="https://freenetsave.com/about/">About</a><a href="https://freenetsave.com/privacy-policy/">Privacy</a><a href="https://freenetsave.com/contact/">Contact</a></div><span>© 2026 freenetsave.com</span></div></footer>
 
-<script>
-(function(){
-"use strict";
-function R(a,b){return a+Math.floor(Math.random()*(b-a+1));}
-function pick(arr){return arr[R(0,arr.length-1)];}
-function nz(a,b){var v;do{v=R(a,b);}while(v===0);return v;}
-var M="−", X="×", D="÷";
-function n(v){return v<0?M+Math.abs(v):String(v);}
-function p(v){return v<0?"("+M+Math.abs(v)+")":String(v);}
-function dec(v,d){return Number(v.toFixed(d));}
-function term(c,x,first){ // signed term for polynomials
-  if(c===0) return "";
-  var s=c<0?(first?M:" "+M+" "):(first?"":" + ");
-  var a=Math.abs(c);
-  return s+(x&&a===1?"":a)+x;
-}
-function poly(cs){ // [[coef,"x²"],...]
-  var out="",first=true;
-  cs.forEach(function(t){var s=term(t[0],t[1],first); if(s){out+=s;first=false;}});
-  return out||"0";
-}
-
-var G={
-1:[
- {t:"Adding to 20",d:"Like 7 + 5",f:function(){var a=R(0,10),b=R(0,10);return{q:a+" + "+b,a:a+b,h:a+" + "+b+" = "+(a+b)+". Start at "+a+" and count on "+b+"."};}},
- {t:"Taking away to 20",d:"Like 15 − 6",f:function(){var a=R(5,20),b=R(0,a);return{q:a+" "+M+" "+b,a:a-b,h:"Start at "+a+" and count back "+b+": "+(a-b)+"."};}},
- {t:"Missing number",d:"Like 8 + ? = 13",f:function(){var a=R(0,10),b=R(0,10);return{q:a+" + ? = "+(a+b),a:b,h:(a+b)+" "+M+" "+a+" = "+b+"."};}}
-],
-2:[
- {t:"Adding to 100",d:"Like 47 + 36",f:function(){var a=R(10,89),b=R(5,100-a);return{q:a+" + "+b,a:a+b,h:"Add the tens, then the ones: "+a+" + "+b+" = "+(a+b)+"."};}},
- {t:"Taking away to 100",d:"Like 82 − 37",f:function(){var a=R(20,100),b=R(5,a);return{q:a+" "+M+" "+b,a:a-b,h:a+" "+M+" "+b+" = "+(a-b)+". Check: "+(a-b)+" + "+b+" = "+a+"."};}},
- {t:"Adding tens",d:"Like 34 + 40",f:function(){var a=R(1,59),k=R(1,4)*10;return{q:a+" + "+k,a:a+k,h:"Only the tens change: "+a+" + "+k+" = "+(a+k)+"."};}}
-],
-3:[
- {t:"Times tables",d:"Like 7 × 8",f:function(){var a=R(2,10),b=R(1,10);return{q:a+" "+X+" "+b,a:a*b,h:a+" groups of "+b+" = "+(a*b)+"."};}},
- {t:"Dividing",d:"Like 56 ÷ 8",f:function(){var b=R(2,10),c=R(1,10);return{q:(b*c)+" "+D+" "+b,a:c,h:b+" "+X+" "+c+" = "+(b*c)+", so "+(b*c)+" "+D+" "+b+" = "+c+"."};}},
- {t:"Missing factor",d:"Like 6 × ? = 42",f:function(){var a=R(2,10),b=R(1,10);return{q:a+" "+X+" ? = "+(a*b),a:b,h:(a*b)+" "+D+" "+a+" = "+b+"."};}}
-],
-4:[
- {t:"Bigger times",d:"Like 46 × 7",f:function(){var a=R(12,399),b=R(2,9);return{q:a+" "+X+" "+b,a:a*b,h:"Split it: "+a+" "+X+" "+b+" = "+(a*b)+"."};}},
- {t:"Long division",d:"Like 378 ÷ 6",f:function(){var b=R(2,9),q=R(11,99);return{q:(b*q)+" "+D+" "+b,a:q,h:b+" "+X+" "+q+" = "+(b*q)+", so the answer is "+q+"."};}},
- {t:"Rounding",d:"To the nearest 10 or 100",f:function(){var x=R(101,9999),t=pick([10,100]);var a=Math.round(x/t)*t;return{q:"Round "+x+"<small>to the nearest "+t+"</small>",a:a,h:"Look at the digit after the "+(t===10?"tens":"hundreds")+": 5 or more rounds up. "+x+" → "+a+"."};}}
-],
-5:[
- {t:"Adding decimals",d:"Like 3.4 + 2.75",f:function(){var a=R(10,999)/100,b=R(10,999)/100;return{q:a+" + "+b,a:dec(a+b,2),h:"Line up the decimal points: "+a+" + "+b+" = "+dec(a+b,2)+"."};}},
- {t:"Subtracting decimals",d:"Like 8.5 − 2.36",f:function(){var a=R(200,999)/100,b=R(10,Math.floor(a*100))/100;return{q:a+" "+M+" "+b,a:dec(a-b,2),h:"Line up the decimal points: "+a+" "+M+" "+b+" = "+dec(a-b,2)+"."};}},
- {t:"Times 10, 100, 1000",d:"Like 3.45 × 100",f:function(){var a=R(101,9999)/100,t=pick([10,100,1000]);return{q:a+" "+X+" "+t,a:dec(a*t,2),h:"Move the decimal point "+(String(t).length-1)+" places right: "+dec(a*t,2)+"."};}},
- {t:"Fraction of a number",d:"Like ¾ of 20",f:function(){var d=pick([2,3,4,5,6,8,10]),nn=R(1,d-1),k=R(2,12),x=d*k;return{q:nn+"/"+d+" of "+x,a:nn*k,h:x+" "+D+" "+d+" = "+k+", then "+k+" "+X+" "+nn+" = "+(nn*k)+"."};}}
-],
-6:[
- {t:"Percent of a number",d:"Like 25% of 80",f:function(){var pc=pick([5,10,20,25,50,75]),x=R(1,20)*20;return{q:pc+"% of "+x,a:x*pc/100,h:pc+"% = "+pc+"/100. "+x+" "+X+" "+pc+" "+D+" 100 = "+(x*pc/100)+"."};}},
- {t:"Ratios",d:"Like 2 : 3 = 8 : ?",f:function(){var a=R(1,9),b=R(1,9),k=R(2,9);return{q:a+" : "+b+" = "+(a*k)+" : ?",a:b*k,h:a+" became "+(a*k)+" (times "+k+"), so "+b+" "+X+" "+k+" = "+(b*k)+"."};}},
- {t:"Order of operations",d:"Times before plus",f:function(){var a=R(2,20),b=R(2,9),c=R(2,9);if(Math.random()<.5)return{q:a+" + "+b+" "+X+" "+c,a:a+b*c,h:"Multiply first: "+b+" "+X+" "+c+" = "+(b*c)+", then "+a+" + "+(b*c)+" = "+(a+b*c)+"."};return{q:"("+a+" + "+b+") "+X+" "+c,a:(a+b)*c,h:"Brackets first: "+(a+b)+", then "+X+" "+c+" = "+((a+b)*c)+"."};}},
- {t:"Negative numbers",d:"Like −4 + 9",f:function(){var a=nz(-20,20),b=nz(-20,20);return{q:n(a)+" + "+p(b),a:a+b,h:"Start at "+n(a)+" on the number line and move "+(b<0?"left ":"right ")+Math.abs(b)+": "+n(a+b)+"."};}}
-],
-7:[
- {t:"Integers × and ÷",d:"Like −6 × 4",f:function(){var a=nz(-12,12),b=nz(-12,12);if(Math.random()<.5)return{q:n(a)+" "+X+" "+p(b),a:a*b,h:"Same signs give plus, different signs give minus: "+n(a*b)+"."};return{q:n(a*b)+" "+D+" "+p(b),a:a,h:"Same signs give plus, different signs give minus: "+n(a)+"."};}},
- {t:"One-step equations",d:"Solve for x",f:function(){var x=R(-12,15),a=nz(2,12);if(Math.random()<.5){var b=R(1,20);return{q:"x + "+b+" = "+n(x+b)+"<small>What is x?</small>",a:x,h:"Take "+b+" from both sides: x = "+n(x+b)+" "+M+" "+b+" = "+n(x)+"."};}return{q:a+"x = "+n(a*x)+"<small>What is x?</small>",a:x,h:"Divide both sides by "+a+": x = "+n(x)+"."};}},
- {t:"Area of shapes",d:"Rectangles and triangles",f:function(){var b=R(2,20),h=R(2,20);if(Math.random()<.5)return{q:"Rectangle "+b+" by "+h+"<small>Area?</small>",a:b*h,h:"Area = length "+X+" width = "+(b*h)+"."};if((b*h)%2)b++;return{q:"Triangle: base "+b+", height "+h+"<small>Area?</small>",a:b*h/2,h:"Area = base "+X+" height "+D+" 2 = "+(b*h/2)+"."};}}
-],
-8:[
- {t:"Powers",d:"Like 3⁴",f:function(){var a=R(2,10),e=a<=3?R(2,5):(a<=5?R(2,4):R(2,3));var s=["","","²","³","⁴","⁵"][e];return{q:a+s,a:Math.pow(a,e),h:a+" multiplied by itself "+e+" times = "+Math.pow(a,e)+"."};}},
- {t:"Square roots",d:"Like √144",f:function(){var a=R(2,20);return{q:"√"+(a*a),a:a,h:a+" "+X+" "+a+" = "+(a*a)+", so √"+(a*a)+" = "+a+"."};}},
- {t:"Two-step equations",d:"Like 3x + 5 = 20",f:function(){var x=R(-10,12),a=nz(2,9),b=nz(-15,15);return{q:poly([[a,"x"],[b,""]])+" = "+n(a*x+b)+"<small>What is x?</small>",a:x,h:(b<0?"Add "+(-b):"Take "+b)+" from both sides: "+a+"x = "+n(a*x)+". Then divide by "+a+": x = "+n(x)+"."};}},
- {t:"Pythagoras",d:"Find the long side",f:function(){var t=pick([[3,4,5],[5,12,13],[8,15,17],[7,24,25]]),k=R(1,t[0]===3?4:2);var a=t[0]*k,b=t[1]*k,c=t[2]*k;return{q:"Right triangle: sides "+a+" and "+b+"<small>Longest side?</small>",a:c,h:"c² = "+a+"² + "+b+"² = "+(a*a)+" + "+(b*b)+" = "+(c*c)+", so c = "+c+"."};}}
-],
-9:[
- {t:"Multi-step equations",d:"Like 4(x − 2) = 20",f:function(){var x=R(-10,12),a=nz(2,9),b=nz(-9,9);return{q:a+"(x "+(b<0?M+" "+(-b):"+ "+b)+") = "+n(a*(x+b))+"<small>What is x?</small>",a:x,h:"Divide by "+a+": x "+(b<0?M+" "+(-b):"+ "+b)+" = "+n(x+b)+". So x = "+n(x)+"."};}},
- {t:"Slope",d:"Between two points",f:function(){var m=nz(-6,6),x1=R(-8,8),dx=nz(1,6),y1=R(-10,10);var x2=x1+dx,y2=y1+m*dx;return{q:"("+n(x1)+", "+n(y1)+") and ("+n(x2)+", "+n(y2)+")<small>Slope?</small>",a:m,h:"Slope = rise "+D+" run = ("+n(y2)+" "+M+" "+p(y1)+") "+D+" ("+n(x2)+" "+M+" "+p(x1)+") = "+n(m*dx)+" "+D+" "+dx+" = "+n(m)+"."};}},
- {t:"Plug in a number",d:"Like 2x² − 3x + 1 at x = 4",f:function(){var a=nz(-3,4),b=R(-9,9),c=R(-9,9),x=R(-5,5);var v=a*x*x+b*x+c;return{q:poly([[a,"x²"],[b,"x"],[c,""]])+"<small>when x = "+n(x)+"</small>",a:v,h:"Put "+n(x)+" in for x: "+a+p(x)+"² "+(b<0?M:"+")+" "+Math.abs(b)+p(x)+" "+(c<0?M:"+")+" "+Math.abs(c)+" = "+n(v)+"."};}}
-],
-10:[
- {t:"Two equations",d:"Find x",f:function(){var x=R(-10,12),y=R(-10,12);return{q:"x + y = "+n(x+y)+"<br>x "+M+" y = "+n(x-y)+"<small>What is x?</small>",a:x,h:"Add the two lines: 2x = "+n(2*x)+", so x = "+n(x)+" (and y = "+n(y)+")."};}},
- {t:"Quadratic roots",d:"The bigger answer",f:function(){var r1=R(-9,9),r2=R(-9,9);while(r1===r2)r2=R(-9,9);var b=-(r1+r2),c=r1*r2;return{q:poly([[1,"x²"],[b,"x"],[c,""]])+" = 0<small>Bigger value of x?</small>",a:Math.max(r1,r2),h:"Factor: (x "+(r1<0?"+ "+(-r1):M+" "+r1)+")(x "+(r2<0?"+ "+(-r2):M+" "+r2)+") = 0, so x = "+n(r1)+" or "+n(r2)+"."};}},
- {t:"Distance between points",d:"On a grid",f:function(){var t=pick([[3,4,5],[6,8,10],[5,12,13],[8,15,17]]);var x1=R(-6,6),y1=R(-6,6),sx=pick([1,-1]),sy=pick([1,-1]);var x2=x1+sx*t[0],y2=y1+sy*t[1];return{q:"("+n(x1)+", "+n(y1)+") to ("+n(x2)+", "+n(y2)+")<small>Distance?</small>",a:t[2],h:"Across "+t[0]+", up/down "+t[1]+". √("+t[0]+"² + "+t[1]+"²) = √"+(t[2]*t[2])+" = "+t[2]+"."};}}
-],
-11:[
- {t:"Logarithms",d:"Like log₂ 32",f:function(){if(Math.random()<.5){var k=R(1,10);return{q:"log₂ "+Math.pow(2,k),a:k,h:"2 to the power "+k+" = "+Math.pow(2,k)+", so the answer is "+k+"."};}var j=R(1,6),b=pick([3,5,10]);if(b!==10)j=R(1,4);return{q:"log"+(b===10?"₁₀":(b===3?"₃":"₅"))+" "+Math.pow(b,j),a:j,h:b+" to the power "+j+" = "+Math.pow(b,j)+", so the answer is "+j+"."};}},
- {t:"Arithmetic sequences",d:"Find a term",f:function(){var a=R(-10,20),d=nz(-6,9),k=R(8,30);var s=[a,a+d,a+2*d,a+3*d].map(n).join(", ");return{q:s+", …<small>Term number "+k+"?</small>",a:a+(k-1)*d,h:"First term "+n(a)+", step "+n(d)+". Term "+k+" = "+n(a)+" + "+(k-1)+" "+X+" "+p(d)+" = "+n(a+(k-1)*d)+"."};}},
- {t:"Function inside a function",d:"f(g(x))",f:function(){var a=nz(-5,5),b=R(-9,9),k=R(-4,4);var g=k*k,v=a*g+b;return{q:"f(x) = "+poly([[a,"x"],[b,""]])+", g(x) = x²<small>f(g("+n(k)+"))?</small>",a:v,h:"g("+n(k)+") = "+g+". Then f("+g+") = "+a+" "+X+" "+g+(b<0?" "+M+" "+(-b):" + "+b)+" = "+n(v)+"."};}}
-],
-12:[
- {t:"Derivatives",d:"Slope of a curve at a point",f:function(){var a=nz(-3,3),b=R(-5,5),c=R(-9,9),x=R(-3,3);var v=3*a*x*x+2*b*x+c;return{q:"f(x) = "+poly([[a,"x³"],[b,"x²"],[c,"x"]])+"<small>f′("+n(x)+")?</small>",a:v,h:"f′(x) = "+poly([[3*a,"x²"],[2*b,"x"],[c,""]])+". Put in "+n(x)+": "+n(v)+"."};}},
- {t:"Combinations",d:"Choose r from n",f:function(){var nn=R(4,12),r=R(1,Math.min(5,nn-1)),v=1;for(var i=0;i<r;i++)v=v*(nn-i)/(i+1);return{q:"C("+nn+", "+r+")<small>How many ways to choose "+r+" from "+nn+"?</small>",a:Math.round(v),h:nn+"! "+D+" ("+r+"! "+X+" "+(nn-r)+"!) = "+Math.round(v)+"."};}},
- {t:"Geometric series",d:"Add up the terms",f:function(){var a=R(1,5),r=pick([2,3]),k=r===2?R(3,8):R(3,5);var s=a*(Math.pow(r,k)-1)/(r-1),t=[];for(var i=0;i<Math.min(k,4);i++)t.push(a*Math.pow(r,i));return{q:t.join(" + ")+(k>4?" + …":"")+"<small>Sum of the first "+k+" terms?</small>",a:s,h:"Sum = a(r"+"ⁿ "+M+" 1) "+D+" (r "+M+" 1) = "+a+"("+r+"^"+k+" "+M+" 1) "+D+" "+(r-1)+" = "+s+"."};}}
-]};
-
-var $=function(id){return document.getElementById(id);};
-var grade=null,topic=null,list=[],idx=0,right=0,cur=null,typed="",locked=false,results=[];
-
-function showGrades(){
-  var box=$("grades");
-  for(var g=1;g<=12;g++){var b=document.createElement("button");b.type="button";b.textContent=g;b.setAttribute("aria-pressed","false");b.setAttribute("aria-label","Grade "+g);b.dataset.g=g;b.onclick=function(){setGrade(+this.dataset.g);};box.appendChild(b);}
-}
-function setGrade(g){
-  grade=g;
-  [].forEach.call($("grades").children,function(b){b.setAttribute("aria-pressed",String(+b.dataset.g===g));});
-  var t=$("topics");t.innerHTML="";
-  G[g].forEach(function(tp,i){var b=document.createElement("button");b.type="button";b.innerHTML="<b></b><span></span>";b.firstChild.textContent=tp.t;b.lastChild.textContent=tp.d;b.onclick=function(){start(i);};t.appendChild(b);});
-}
-function start(i){
-  topic=i;idx=0;right=0;results=[];
-  var seen={};list=[];var tries=0;
-  while(list.length<10&&tries<200){var q=G[grade][i].f();tries++;if(seen[q.q]&&tries<150)continue;seen[q.q]=1;list.push(q);}
-  $("pick").style.display="none";$("done").classList.remove("on");$("play").classList.add("on");
-  $("tag").textContent="Grade "+grade+" · "+G[grade][i].t;
-  show();
-  $("play").scrollIntoView({block:"start",behavior:"smooth"});
-}
-function dots(){
-  var d=$("dots");d.innerHTML="";
-  for(var i=0;i<10;i++){var e=document.createElement("i");if(results[i]===true)e.className="ok";else if(results[i]===false)e.className="no";else if(i===idx)e.className="now";d.appendChild(e);}
-}
-function show(){
-  cur=list[idx];typed="";locked=false;
-  $("qn").textContent="Question "+(idx+1)+" of 10";
-  $("q").innerHTML=cur.q;
-  $("ans").textContent="";
-  $("fb").className="fb";$("fb").innerHTML="";
-  $("go").textContent="Check";
-  dots();
-}
-function key(k){
-  if(k==="go"){return locked?next():check();}
-  if(locked) return;
-  if(k==="back"){typed=typed.slice(0,-1);}
-  else if(k==="-"){typed=typed.charAt(0)==="-"?typed.slice(1):"-"+typed;}
-  else if(k==="."){if(typed.indexOf(".")<0)typed+=(typed===""||typed==="-")?"0.":".";}
-  else if(typed.replace(/[-.]/g,"").length<9){typed=(typed==="0"?"":(typed==="-0"?"-":typed))+k;}
-  $("ans").textContent=typed.replace("-",M);
-}
-function check(){
-  if(typed===""||typed==="-"||typed==="."){ $("fb").className="fb no";$("fb").innerHTML="<b>Type an answer first.</b>Use the number pad or your keyboard.";return; }
-  var v=parseFloat(typed),ok=Math.abs(v-cur.a)<1e-6;
-  results[idx]=ok;if(ok)right++;locked=true;
-  var fb=$("fb");fb.className="fb "+(ok?"ok":"no");
-  var b=document.createElement("b");b.textContent=ok?pick(["Correct!","Right!","Well done!","Yes!"]):"Not quite. The answer is "+n(cur.a)+".";
-  var s=document.createElement("span");s.textContent=cur.h;
-  fb.innerHTML="";fb.appendChild(b);fb.appendChild(s);
-  $("go").textContent=idx===9?"See score":"Next";
-  dots();
-}
-function next(){
-  idx++;
-  if(idx<10){show();return;}
-  $("play").classList.remove("on");$("done").classList.add("on");
-  $("score").textContent=right+" / 10";
-  $("doneMsg").textContent=right===10?"Perfect score!":(right>=8?"Great work!":(right>=5?"Good effort!":"Keep practising!"));
-  $("doneSub").textContent="Grade "+grade+" · "+G[grade][topic].t+". Every round has new questions.";
-  $("again").focus();
-}
-function toTopics(){$("play").classList.remove("on");$("done").classList.remove("on");$("pick").style.display="";$("pick").scrollIntoView({block:"start",behavior:"smooth"});}
-
-$("pad").addEventListener("click",function(e){var b=e.target.closest("button");if(b)key(b.dataset.k);});
-document.addEventListener("keydown",function(e){
-  if(!$("play").classList.contains("on")||e.ctrlKey||e.metaKey||e.altKey)return;
-  var k=e.key;
-  if(/^[0-9]$/.test(k))key(k);
-  else if(k==="."||k===",")key(".");
-  else if(k==="-")key("-");
-  else if(k==="Backspace"){e.preventDefault();key("back");}
-  else if(k==="Enter"){if(document.activeElement&&document.activeElement.closest&&document.activeElement.closest("#pad")&&document.activeElement.dataset.k!=="go")return;e.preventDefault();key("go");}
-});
-$("back").onclick=toTopics;$("other").onclick=toTopics;$("again").onclick=function(){start(topic);};
-showGrades();
-var m=location.hash.match(/^#g(\d+)$/);setGrade(m&&G[+m[1]]?+m[1]:1);
-})();
-</script>
+<script src="topics.js?v=2"></script>
+<script src="app.js?v=2"></script>
 </body>
 </html>
