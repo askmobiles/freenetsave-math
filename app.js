@@ -3,62 +3,133 @@
 "use strict";
 var F=window.FNS_MATH,G=F.G,n=F.n,pick=F.pick,R=F.R,M="−";
 var $=function(id){return document.getElementById(id);};
-var grade=1,mode="practice",topic=0;           // topic: index or "mix"
+var N=10;
+var grade=1,mode="practice",view="grade",strand=null,band=null;
+var sel={pool:[],label:"",list:[],pos:-1};   // what is being practised now
 var list=[],idx=0,right=0,cur=null,typed="",locked=false,results=[],missed=[];
 var ch={on:false,left:60,score:0,streak:0,best:0,count:0,timer:null,wait:null},sessionBest={};
 
-function gen(){var t=topic==="mix"?pick(G[grade]):G[grade][topic];return t.f();}
+/* every topic, with its grade and its all-grades subject */
+var SUBJ=[[/Word/,"Word problems"],[/Trig/,"Trigonometry"],[/Calculus|Vectors/,"Calculus & vectors"],[/Money &|Percent|Ratio/,"Percent, ratio & money"],[/Data|Chance|Counting/,"Data & chance"],[/Fraction|Decimal/,"Fractions & decimals"],[/Adding|Taking/,"Adding & subtracting"],[/Times|Groups/,"Multiplying & dividing"],[/Measur|Shapes, money|Money, time/,"Measuring, time & money"],[/Geometry|Coordinate/,"Geometry"],[/^Numbers$|Number sense|Whole numbers|Integers/,"Numbers & place value"]];
+var ORDER=["Numbers & place value","Adding & subtracting","Multiplying & dividing","Fractions & decimals","Percent, ratio & money","Measuring, time & money","Geometry","Algebra & equations","Data & chance","Trigonometry","Calculus & vectors","Word problems"];
+var ALL=[];
+(function(){for(var g=1;g<=12;g++)G[g].forEach(function(t){var s="Algebra & equations";for(var i=0;i<SUBJ.length;i++)if(SUBJ[i][0].test(t.c)){s=SUBJ[i][1];break;}ALL.push({g:g,t:t,s:s});});})();
+
+var LS=window.FNS_LESSONS||{};
+function lessonOf(it){return LS[it.g+"|"+it.t.t]||LS[it.t.t]||[];}
+function gen(){var it=pick(sel.pool),q=it.t.f();q.it=it;return q;}
 function many(k){var seen={},out=[],tries=0;while(out.length<k&&tries<k*40){var q=gen();tries++;if(seen[q.q]&&tries<k*30)continue;seen[q.q]=1;out.push(q);}return out;}
-function topicName(){return topic==="mix"?"Mix of everything":G[grade][topic].t;}
 function show(a){return a.replace(/-/g,M);}
 function ansText(q){return q.s?show(q.s):n(q.a);}
 function parse(t){if(t===""||t==="-")return null;var p=t.split("/");if(p.length===2){var a=parseFloat(p[0]),b=parseFloat(p[1]);if(isNaN(a)||isNaN(b)||b===0)return null;return a/b;}var v=parseFloat(t);return isNaN(v)?null:v;}
 function isRight(t,q){if(q.x)return t===q.s;var v=parse(t);return v!==null&&Math.abs(v-q.a)<1e-6;}
 
 /* ----- picker ----- */
-function showGrades(){var box=$("grades");for(var g=1;g<=12;g++){var b=document.createElement("button");b.type="button";b.textContent=g;b.setAttribute("aria-pressed","false");b.setAttribute("aria-label","Grade "+g);b.dataset.g=g;b.onclick=function(){setGrade(+this.dataset.g);};box.appendChild(b);}}
-function setGrade(g){
-  grade=g;
-  [].forEach.call($("grades").children,function(b){b.setAttribute("aria-pressed",String(+b.dataset.g===g));});
+function sym(c){var m=[[/Adding/,"+"],[/Taking/,"−"],[/Times|Groups|Multiplying/,"×"],[/Fraction|Decimal/,"½"],[/Percent|Ratio|Money &/,"%"],[/Measur|money|Money, time/,"cm"],[/Geometry|Shapes|Coordinate/,"△"],[/Trig/,"θ"],[/Calculus/,"∫"],[/Powers|Exponents/,"x²"],[/Sequences|Series/,"…"],[/Vectors/,"→"],[/Integers/,"±"],[/Data|Chance|Counting/,"⚄"],[/Word/,"?"],[/Number|Whole/,"123"]];for(var i=0;i<m.length;i++)if(m[i][0].test(c))return m[i][1];return "x";}
+function confetti(){if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion:reduce)").matches)return;var box=document.createElement("div");box.className="confetti";var col=["#2563eb","#f97316","#16a34a","#a855f7","#ec4899","#facc15"];for(var i=0;i<40;i++){var s=document.createElement("i");s.style.left=R(0,100)+"%";s.style.background=col[i%6];s.style.animationDelay=(R(0,60)/100)+"s";s.style.animationDuration=(R(140,260)/100)+"s";box.appendChild(s);}document.body.appendChild(box);setTimeout(function(){box.remove();},3400);}
+function chips(box,names,cur,fn){box.innerHTML="";names.forEach(function(c){var b=document.createElement("button");b.type="button";b.textContent=c;b.setAttribute("aria-pressed",String(c===cur));b.onclick=function(){fn(c);};box.appendChild(b);});box.style.display=names.length>1?"":"none";}
+function cards(items,badge){
   var box=$("topics");box.innerHTML="";
-  var cats=[],by={};
-  G[g].forEach(function(tp,i){if(!by[tp.c]){by[tp.c]=[];cats.push(tp.c);}by[tp.c].push(i);});
-  function grid(){var d=document.createElement("div");d.className="tgrid";box.appendChild(d);return d;}
-  function btn(par,title,desc,val,cls){var b=document.createElement("button");b.type="button";if(cls)b.className=cls;var s=document.createElement("b");s.textContent=title;var e=document.createElement("span");e.textContent=desc;b.appendChild(s);b.appendChild(e);b.onclick=function(){launch(val);};par.appendChild(b);}
-  var h=document.createElement("p");h.className="cat";h.textContent="Everything";box.appendChild(h);
-  btn(grid(),"Mix of everything","All Grade "+g+" topics, shuffled","mix","mix");
-  cats.forEach(function(c){var p=document.createElement("p");p.className="cat";p.textContent=c;box.appendChild(p);var gr=grid();by[c].forEach(function(i){btn(gr,G[g][i].t,G[g][i].d,i);});});
-  try{history.replaceState(null,"","#g"+g);}catch(e){}
+  items.forEach(function(it,k){var b=document.createElement("button");b.type="button";b.className="c"+(k%5);var ic=document.createElement("i");ic.textContent=sym(it.t.c);ic.setAttribute("aria-hidden","true");var w=document.createElement("span");w.className="tx";var s=document.createElement("b");s.textContent=it.t.t;var e=document.createElement("span");e.textContent=(badge?"Grade "+it.g+" · ":"")+it.t.d;w.appendChild(s);w.appendChild(e);b.appendChild(ic);b.appendChild(w);b.onclick=function(){launchOne(items,k);};box.appendChild(b);});
+  $("none").style.display=items.length?"none":"block";
 }
-function setMode(m){mode=m;[].forEach.call($("modes").children,function(b){b.setAttribute("aria-pressed",String(b.dataset.m===m));});}
-function launch(t){topic=t;if(mode==="sheet")openSheet();else if(mode==="challenge")startChallenge();else startPractice();}
+var BANDS=[["Grades 1–3",1,3],["Grades 4–6",4,6],["Grades 7–9",7,9],["Grades 10–12",10,12]];
+function render(){
+  var q=$("find").value.trim().toLowerCase();
+  [].forEach.call($("views").children,function(b){b.setAttribute("aria-pressed",String(!q&&b.dataset.v===view));});
+  $("grades").style.display=(!q&&view==="grade")?"":"none";
+  $("subjects").style.display=(!q&&view==="subject")?"":"none";
+  $("pickLab").textContent=q?"Topics that match":(view==="grade"?"Pick a grade":"Pick a subject");
+  if(q){
+    $("cats").style.display="none";$("mix").style.display="none";
+    cards(ALL.filter(function(it){return (it.t.t+" "+it.t.d+" "+it.t.c+" "+it.s+" grade "+it.g).toLowerCase().indexOf(q)>-1;}).slice(0,40),true);
+    return;
+  }
+  $("mix").style.display=mode==="learn"?"none":"";
+  if(view==="grade"){
+    [].forEach.call($("grades").children,function(b){b.setAttribute("aria-pressed",String(+b.dataset.g===grade));});
+    var inG=ALL.filter(function(it){return it.g===grade;}),cats=[];
+    inG.forEach(function(it){if(cats.indexOf(it.t.c)<0)cats.push(it.t.c);});
+    if(cats.indexOf(band)<0)band=cats[0];
+    chips($("cats"),cats,band,function(c){band=c;render();});
+    cards(inG.filter(function(it){return it.t.c===band;}),false);
+    $("mix").textContent="Or mix all of Grade "+grade;
+    $("mix").onclick=function(){launchMix(inG,"Grade "+grade+" · Mix of everything");};
+  }else{
+    [].forEach.call($("subjects").children,function(b){b.setAttribute("aria-pressed",String(b.textContent===strand));});
+    var inS=ALL.filter(function(it){return it.s===strand;});
+    var bs=BANDS.filter(function(b){return inS.some(function(it){return it.g>=b[1]&&it.g<=b[2];});});
+    var names=bs.map(function(b){return b[0];});
+    if(names.indexOf(band)<0)band=names[0];
+    chips($("cats"),names,band,function(c){band=c;render();});
+    var bb=bs[names.indexOf(band)],show=inS.filter(function(it){return it.g>=bb[1]&&it.g<=bb[2];});
+    cards(show,true);
+    $("mix").textContent="Or mix all "+strand+", "+band;
+    $("mix").onclick=function(){launchMix(show,strand+" · "+band+" mix");};
+  }
+  try{history.replaceState(null,"",view==="grade"?"#g"+grade:"#topics");}catch(e){}
+}
+function setup(){
+  var box=$("grades"),g;
+  for(g=1;g<=12;g++){var b=document.createElement("button");b.type="button";b.textContent=g;b.setAttribute("aria-pressed","false");b.setAttribute("aria-label","Grade "+g);b.dataset.g=g;b.onclick=function(){grade=+this.dataset.g;band=null;render();};box.appendChild(b);}
+  ORDER.forEach(function(s){var b=document.createElement("button");b.type="button";b.textContent=s;b.setAttribute("aria-pressed","false");b.onclick=function(){strand=s;band=null;render();};$("subjects").appendChild(b);});
+  strand=ORDER[0];
+  $("views").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;view=b.dataset.v;band=null;$("find").value="";render();});
+  $("find").addEventListener("input",render);
+}
+var MD={learn:"See how to do it, step by step, with worked examples.",practice:"Each question shows how it is worked out. Every round has new questions.",challenge:"60 seconds on the clock. How many can you get?",sheet:"A printable page of questions with an answer key."};
+function setMode(m){mode=m;[].forEach.call($("modes").children,function(b){b.setAttribute("aria-pressed",String(b.dataset.m===m));});$("mdesc").textContent=MD[m];$("plen").style.display=m==="practice"?"":"none";if($("mix"))$("mix").style.display=(m==="learn"||$("find").value.trim())?"none":"";}
+function go(){if(mode==="learn"&&sel.pool.length===1)openLearn();else if(mode==="sheet")openSheet();else if(mode==="challenge")startChallenge();else startPractice();}
+function launchOne(items,k){sel={pool:[items[k]],label:"Grade "+items[k].g+" · "+items[k].t.t,list:items,pos:k};go();}
+function launchMix(items,label){sel={pool:items,label:label,list:[],pos:-1};go();}
 function screen(name){
   stopClock();
   $("pick").style.display=name==="pick"?"":"none";
   $("play").classList.toggle("on",name==="play");
   $("done").classList.toggle("on",name==="done");
   $("sheetwrap").classList.toggle("on",name==="sheet");
+  $("learn").classList.toggle("on",name==="learn");
   document.body.classList.toggle("playing",name==="play");
-  var el={pick:"pick",play:"play",done:"done",sheet:"sheetwrap"}[name];
+  var nx=sel.pos>-1&&sel.pos<sel.list.length-1?sel.list[sel.pos+1]:null;
+  $("nextT").style.display=nx?"":"none";if(nx)$("nextT").textContent="Next topic: "+nx.t.t;
+  var el={pick:"pick",play:"play",done:"done",sheet:"sheetwrap",learn:"learn"}[name];
   var top=$(el).getBoundingClientRect().top+window.pageYOffset-10;
   window.scrollTo({top:name==="pick"?0:top,behavior:"auto"});
 }
 
+/* ----- learn ----- */
+function fillSteps(ol,it){ol.innerHTML="";lessonOf(it).forEach(function(s){var li=document.createElement("li");li.textContent=s;ol.appendChild(li);});}
+function examples(){
+  var box=$("lex");box.innerHTML="";
+  many(3).forEach(function(q){var d=document.createElement("div");d.className="ex";var a=document.createElement("div");a.className="exq";a.innerHTML=q.q;var b=document.createElement("p");var s=document.createElement("b");s.textContent="Answer: "+ansText(q);b.appendChild(s);var c=document.createElement("p");c.textContent=q.h;d.appendChild(a);d.appendChild(b);d.appendChild(c);box.appendChild(d);});
+}
+function openLearn(){
+  var it=sel.pool[0];
+  $("ltag").textContent="Grade "+it.g+" \u00b7 "+it.t.c;$("ltitle").textContent=it.t.t;
+  fillSteps($("lsteps"),it);examples();screen("learn");
+}
+function setHelp(on){
+  var ok=!ch.on&&cur&&cur.it&&lessonOf(cur.it).length>0;
+  $("help").style.display=ok?"":"none";
+  on=on&&ok;$("help").setAttribute("aria-expanded",String(on));$("helpbox").style.display=on?"block":"none";
+  if(on)fillSteps($("helpbox"),cur.it);
+}
+
 /* ----- practice ----- */
 function startPractice(){
-  ch.on=false;idx=0;right=0;results=[];missed=[];list=many(10);
+  ch.on=false;idx=0;right=0;results=[];missed=[];list=many(N);
   $("play").classList.remove("ch");
-  $("tag").textContent="Grade "+grade+" · "+topicName();
+  $("tag").textContent=sel.label;
   screen("play");showQ();
 }
-function dots(){var d=$("dots");d.innerHTML="";for(var i=0;i<10;i++){var e=document.createElement("i");if(results[i]===true)e.className="ok";else if(results[i]===false)e.className="no";else if(i===idx)e.className="now";d.appendChild(e);}}
+function dots(){var d=$("dots");d.innerHTML="";d.classList.toggle("many",N>10);for(var i=0;i<N;i++){var e=document.createElement("i");if(results[i]===true)e.className="ok";else if(results[i]===false)e.className="no";else if(i===idx)e.className="now";d.appendChild(e);}}
 function putQ(q){var el=$("q");el.innerHTML=q.q;el.classList.toggle("long",q.q.replace(/<[^>]+>/g,"").length>42);}
 function showQ(){
   cur=list[idx];typed="";locked=false;
-  $("qn").textContent="Question "+(idx+1)+" of 10";
+  $("qn").textContent="Question "+(idx+1)+" of "+N;
   putQ(cur);$("ans").textContent="";
   $("fb").className="fb";$("fb").innerHTML="";
-  $("go").textContent="Check";dots();
+  $("go").textContent="Check";dots();setHelp(false);
 }
 function feedback(ok,head,body){var fb=$("fb");fb.className="fb "+(ok?"ok":"no");fb.innerHTML="";var b=document.createElement("b");b.textContent=head;fb.appendChild(b);if(body){var s=document.createElement("span");s.textContent=body;fb.appendChild(s);}}
 function check(){
@@ -68,21 +139,21 @@ function check(){
   results[idx]=ok;if(ok)right++;else missed.push({q:cur,yours:show(typed)});
   locked=true;
   feedback(ok,ok?pick(["Correct!","Right!","Well done!","Yes!","Nice work!"]):"Not quite. The answer is "+ansText(cur)+".",cur.h);
-  $("go").textContent=idx===9?"See score":"Next";dots();
+  $("go").textContent=idx===N-1?"See score":"Next";dots();
 }
-function next(){idx++;if(idx<10){showQ();return;}finishPractice();}
+function next(){idx++;if(idx<N){showQ();return;}finishPractice();}
 function stars(k){var s="";for(var i=0;i<3;i++)s+=i<k?"★":"<i>★</i>";$("stars").innerHTML=s;}
 function finishPractice(){
-  stars(right===10?3:(right>=8?2:(right>=5?1:0)));
-  $("score").textContent=right+" / 10";
-  $("doneMsg").textContent=right===10?"Perfect score!":(right>=8?"Great work!":(right>=5?"Good effort!":"Keep practising!"));
-  $("doneSub").textContent="Grade "+grade+" · "+topicName()+". Every round has new questions.";
-  review();screen("done");$("again").focus();
+  var pc=right/N;stars(pc===1?3:(pc>=.8?2:(pc>=.5?1:0)));
+  $("score").textContent=right+" / "+N;
+  $("doneMsg").textContent=pc===1?"Perfect score!":(pc>=.8?"Great work!":(pc>=.5?"Good effort!":"Keep practising!"));
+  $("doneSub").textContent=sel.label+". Every round has new questions.";
+  review();screen("done");$("again").focus();if(right/N>=.8)confetti();
 }
 function review(){
   var box=$("review");box.innerHTML="";if(!missed.length)return;
   var h=document.createElement("h3");h.textContent="Have another look at these";box.appendChild(h);
-  missed.slice(0,10).forEach(function(m){var d=document.createElement("div");d.innerHTML=m.q.q.replace(/<br>/g," &nbsp; ").replace(/<small>/g," <small>");var e=document.createElement("em");e.textContent="Answer: "+ansText(m.q)+". "+m.q.h;d.appendChild(e);box.appendChild(d);});
+  missed.slice(0,30).forEach(function(m){var d=document.createElement("div");d.innerHTML=m.q.q.replace(/<br>/g," &nbsp; ").replace(/<small>/g," <small>");var e=document.createElement("em");e.textContent="Answer: "+ansText(m.q)+". "+m.q.h;d.appendChild(e);box.appendChild(d);});
 }
 
 /* ----- fun challenge ----- */
@@ -90,7 +161,7 @@ function stopClock(){if(ch.timer){clearInterval(ch.timer);ch.timer=null;}if(ch.w
 function startChallenge(){
   ch.on=true;ch.left=60;ch.score=0;ch.streak=0;ch.best=0;ch.count=0;right=0;missed=[];
   $("play").classList.add("ch");
-  $("tag").textContent="Grade "+grade+" · "+topicName();
+  $("tag").textContent=sel.label;
   screen("play");hud();nextCh();
   ch.end=Date.now()+60000;
   ch.timer=setInterval(function(){ch.left=Math.max(0,Math.ceil((ch.end-Date.now())/1000));hud();if(ch.left<=0)finishChallenge();},250);
@@ -104,7 +175,7 @@ function nextCh(){
   cur=gen();typed="";locked=false;ch.count++;
   $("qn").textContent="Question "+ch.count;
   putQ(cur);$("ans").textContent="";$("fb").className="fb";$("fb").innerHTML="";
-  $("qcard").className="qcard";$("go").textContent="Enter";
+  $("qcard").className="qcard";$("go").textContent="Enter";setHelp(false);
 }
 function checkCh(){
   if(parse(typed)===null)return;
@@ -116,13 +187,13 @@ function checkCh(){
 }
 function finishChallenge(){
   stopClock();ch.on=false;
-  var key=grade+"|"+topic,prev=sessionBest[key]||0,isBest=ch.score>prev&&prev>0;
+  var key=sel.label,prev=sessionBest[key]||0,isBest=ch.score>prev&&prev>0;
   if(ch.score>prev)sessionBest[key]=ch.score;
   stars(ch.score>=150?3:(ch.score>=80?2:(ch.score>=30?1:0)));
   $("score").textContent=ch.score;
   $("doneMsg").textContent=isBest?"New best this visit!":(ch.score>=150?"Lightning fast!":(ch.score>=80?"Great speed!":(ch.score>=30?"Nice run!":"Good try. Go again!")));
-  $("doneSub").textContent=right+" correct in 60 seconds · best streak "+ch.best+(prev&&!isBest?" · your best this visit: "+prev:"")+". Grade "+grade+" · "+topicName()+".";
-  review();screen("done");$("again").focus();
+  $("doneSub").textContent=right+" correct in 60 seconds · best streak "+ch.best+(prev&&!isBest?" · your best this visit: "+prev:"")+". "+sel.label+".";
+  review();screen("done");$("again").focus();if(ch.score>=80)confetti();
 }
 
 /* ----- keypad ----- */
@@ -155,7 +226,7 @@ function openSheet(){screen("sheet");buildSheet(true);}
 function buildSheet(fresh){
   var k=+$("sn").value;
   if(fresh||sheetQs.length!==k)sheetQs=many(k);
-  var title="Grade "+grade+" Math: "+topicName();
+  var title="Math: "+sel.label.replace(" \u00b7 ",": ");
   var h='<div class="sh-top"><h2></h2><span>math.freenetsave.com</span></div>'+
         '<div class="sh-meta"><span>Name<i></i></span><span>Date<i></i></span><span>Score<i class="sm"></i>/ '+k+'</span></div>'+
         '<ol class="sh-q'+($("swork").checked?" work":"")+'">';
@@ -177,6 +248,11 @@ $("back").onclick=toTopics;$("other").onclick=toTopics;$("sback").onclick=toTopi
 $("again").onclick=function(){if(mode==="challenge")startChallenge();else startPractice();};
 $("toSheet").onclick=function(){openSheet();};
 $("modes").addEventListener("click",function(e){var b=e.target.closest("button");if(b)setMode(b.dataset.m);});
-showGrades();
-var m=location.hash.match(/^#g(\d+)$/);setGrade(m&&G[+m[1]]?+m[1]:1);
+$("plen").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;N=+b.dataset.n;[].forEach.call($("plen").querySelectorAll("button"),function(x){x.setAttribute("aria-pressed",String(x===b));});});
+$("help").onclick=function(){setHelp($("help").getAttribute("aria-expanded")!=="true");};
+$("lback").onclick=toTopics;$("lmore").onclick=examples;$("lprac").onclick=function(){startPractice();};$("lsheet").onclick=function(){openSheet();};
+$("nextT").onclick=function(){launchOne(sel.list,sel.pos+1);};
+setup();setMode("practice");
+var m=location.hash.match(/^#g(\d+)$/);if(m&&G[+m[1]])grade=+m[1];if(location.hash==="#topics")view="subject";
+render();
 })();
