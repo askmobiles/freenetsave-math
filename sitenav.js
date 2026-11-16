@@ -5,7 +5,7 @@ var S="https://freenetsave.com/",L="https://learn.freenetsave.com/";
 var M=[["PDF & pictures",S+"#pdf",[["PDF editor",S+"pdf-editor/"],["PDF writer",S+"pdf-writer/"],["Make PDF smaller",S+"make-pdf-smaller/"],["Merge PDF",S+"merge-pdf/"],["Pictures to PDF",S+"pictures-to-pdf/"],["Make picture smaller",S+"make-picture-smaller/"]]],
 ["Money",S+"#money",[["Tip & bill splitter",S+"tip-calculator/"],["Percent & discount",S+"percentage-calculator/"],["Loan & car payment",S+"loan-calculator/"],["Mortgage calculator",S+"mortgage-calculator/"],["How much house can I afford?",S+"affordability-calculator/"],["Payment calculator",S+"payment-calculator/"],["HST calculator (Canada)",S+"hst-calculator/"]]],
 ["Phone & tech",S+"#tech",[["Password maker",S+"password-generator/"],["IMEI checker",S+"imei-checker/"],["Word counter",S+"word-counter/"],["Colour picker",S+"color-picker/"]]],
-["Learn",L,[["Math, Grades 1 to 12","https://math.freenetsave.com/"],["English",L+"english/"],["Science",L+"science/"],["French",L+"french/"],["Geography",L+"geography/"],["All subjects",L]]],
+["Learn",L,[["Math, Grades 1 to 12","https://math.freenetsave.com/"],["English",L+"english/"],["Science",L+"science/"],["French",L+"french/"],["Geography",L+"geography/"],["History",L+"history/"],["All subjects",L]]],
 ["Fun",S+"numerology-calculator/"],["About",S+"about/"]];
 var here=location.hostname.indexOf("math.")===0||location.hostname.indexOf("learn.")===0;
 function el(t,c){var e=document.createElement(t);if(c)e.className=c;return e;}
