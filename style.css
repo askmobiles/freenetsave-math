@@ -318,3 +318,13 @@ main{max-width:1240px;margin:0 auto;padding:26px 4% 56px}
 @media (max-width:599px){.hero{padding:20px 18px}.hero p{font-size:16px}.thead{margin-top:24px;flex-direction:column;align-items:flex-start}.thead h2{font-size:22px}.cats.big{grid-template-columns:1fr}.cats.big button{min-height:0}.modes{grid-template-columns:repeat(5,1fr);gap:6px;max-width:none}.modes button{padding:10px 2px;font-size:12.5px}.modes svg{width:24px;height:24px}.trust{grid-template-columns:1fr}}
 @media print{.trust{display:none!important}}
 body.inside .hero{display:none}
+
+/* ---- banner picture: younger.jpg for Grades 1 to 5, older.jpg for Grades 6 to 12 ---- */
+.hero.pic{background-color:#6fcdfb;background-size:cover;background-position:right center;background-repeat:no-repeat;min-height:300px;align-items:flex-start;padding:30px 34px}
+.hero.pic .art{display:none}
+.hero.pic .hero-tx{max-width:46%}
+.hero.pic p{font-weight:550}
+.hero.pic .ticks li{background:rgba(255,255,255,.8);border-radius:99px;padding:5px 12px 5px 30px}
+.hero.pic .ticks li:before{left:6px;top:5px}
+@media (max-width:1100px){.hero.pic .hero-tx{max-width:52%}.hero.pic .ticks{display:none}}
+@media (max-width:760px){.hero.pic{display:block;min-height:0;background-size:210% auto;background-position:right bottom;padding:18px 18px 66vw}.hero.pic .hero-tx{max-width:none}}

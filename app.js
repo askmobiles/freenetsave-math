@@ -42,6 +42,7 @@ function render(){
   $("subjects").style.display=(!q&&view==="subject")?"":"none";
   $("pickLab").textContent=q?"Topics that match":(view==="grade"?"Pick a grade":"Pick a subject");
   var gv=!q&&view==="grade";$("cats").className="cats"+(gv?" big":"");$("catH").parentNode.parentNode.style.display=gv?"":"none";
+  var hr=$("hero");if(gv){hr.style.backgroundImage="url(banners/"+(grade>=6?"older":"younger")+".jpg?v=3)";hr.classList.add("pic");}else{hr.style.backgroundImage="";hr.classList.remove("pic");}
   $("heroH").innerHTML=gv?'<span class="gp">Grade '+grade+'</span> Math':"Free math practice, Grades 1 to 12";
   $("heroP").textContent=gv?"Learn, practice and master Grade "+grade+" math. Free, no sign-up, nothing saved.":"Learn how, practice, race the clock, or print a worksheet. No sign-up, nothing saved.";
   $("tLab").textContent=q?"":"Pick a topic";
