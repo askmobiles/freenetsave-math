@@ -10,7 +10,7 @@ var list=[],idx=0,right=0,cur=null,typed="",locked=false,results=[],missed=[];
 var ch={on:false,left:60,score:0,streak:0,best:0,count:0,timer:null,wait:null},sessionBest={};
 
 /* every topic, with its grade and its all-grades subject */
-var SUBJ=[[/Word/,"Word problems"],[/Trig/,"Trigonometry"],[/Calculus|Vectors/,"Calculus & vectors"],[/Money &|Percent|Ratio/,"Percent, ratio & money"],[/Data|Chance|Counting/,"Data & chance"],[/Fraction|Decimal/,"Fractions & decimals"],[/Adding|Taking/,"Adding & subtracting"],[/Times|Groups/,"Multiplying & dividing"],[/Measur|Shapes, money|Money, time/,"Measuring, time & money"],[/Geometry|Coordinate/,"Geometry"],[/^Numbers$|Number sense|Whole numbers|Integers/,"Numbers & place value"]];
+var SUBJ=[[/Word/,"Word problems"],[/Trig/,"Trigonometry"],[/Calculus|Vectors/,"Calculus & vectors"],[/Money &|Percent|Ratio|Financial/,"Percent, ratio & money"],[/Data|Chance|Counting/,"Data & chance"],[/Fraction|Decimal/,"Fractions & decimals"],[/Adding|Taking/,"Adding & subtracting"],[/Times|Groups/,"Multiplying & dividing"],[/Measur|Shapes, money|Money, time/,"Measuring, time & money"],[/Geometry|Coordinate/,"Geometry"],[/^Numbers$|Number sense|Whole numbers|Integers/,"Numbers & place value"]];
 var ORDER=["Numbers & place value","Adding & subtracting","Multiplying & dividing","Fractions & decimals","Percent, ratio & money","Measuring, time & money","Geometry","Algebra & equations","Data & chance","Trigonometry","Calculus & vectors","Word problems"];
 var ALL=[];
 (function(){for(var g=1;g<=12;g++)G[g].forEach(function(t){var s="Algebra & equations";for(var i=0;i<SUBJ.length;i++)if(SUBJ[i][0].test(t.c)){s=SUBJ[i][1];break;}ALL.push({g:g,t:t,s:s});});})();
@@ -25,9 +25,10 @@ function parse(t){if(t===""||t==="-")return null;var p=t.split("/");if(p.length=
 function isRight(t,q){if(q.x)return t===q.s;var v=parse(t);return v!==null&&Math.abs(v-q.a)<1e-6;}
 
 /* ----- picker ----- */
-function sym(c){var m=[[/Adding/,"+"],[/Taking/,"−"],[/Times|Groups|Multiplying/,"×"],[/Fraction|Decimal/,"½"],[/Percent|Ratio|Money &/,"%"],[/Measur|money|Money, time/,"cm"],[/Geometry|Shapes|Coordinate/,"△"],[/Trig/,"θ"],[/Calculus/,"∫"],[/Powers|Exponents/,"x²"],[/Sequences|Series/,"…"],[/Vectors/,"→"],[/Integers/,"±"],[/Data|Chance|Counting/,"⚄"],[/Word/,"?"],[/Number|Whole/,"123"]];for(var i=0;i<m.length;i++)if(m[i][0].test(c))return m[i][1];return "x";}
+function sym(c){var m=[[/Adding/,"+"],[/Taking/,"−"],[/Times|Groups|Multiplying/,"×"],[/Fraction|Decimal/,"½"],[/Percent|Ratio|Money &/,"%"],[/Measur|money|Money, time/,"cm"],[/Geometry|Shapes|Coordinate/,"△"],[/Trig/,"θ"],[/Calculus/,"∫"],[/Powers|Exponents/,"x²"],[/Sequences|Series/,"…"],[/Vectors/,"→"],[/Integers/,"±"],[/Data|Chance|Counting/,"⚄"],[/Word/,"?"],[/Equation/,"="],[/Pattern|Linear/,"↗"],[/Financial/,"$"],[/Algebra/,"x"],[/Number|Whole/,"123"]];for(var i=0;i<m.length;i++)if(m[i][0].test(c))return m[i][1];return "x";}
 function confetti(){if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion:reduce)").matches)return;var box=document.createElement("div");box.className="confetti";var col=["#2563eb","#f97316","#16a34a","#a855f7","#ec4899","#facc15"];for(var i=0;i<40;i++){var s=document.createElement("i");s.style.left=R(0,100)+"%";s.style.background=col[i%6];s.style.animationDelay=(R(0,60)/100)+"s";s.style.animationDuration=(R(140,260)/100)+"s";box.appendChild(s);}document.body.appendChild(box);setTimeout(function(){box.remove();},3400);}
 function chips(box,names,cur,fn){box.innerHTML="";names.forEach(function(c){var b=document.createElement("button");b.type="button";b.textContent=c;b.setAttribute("aria-pressed",String(c===cur));b.onclick=function(){fn(c);};box.appendChild(b);});box.style.display=names.length>1?"":"none";}
+function catCards(box,cats,cur,inG,fn){box.innerHTML="";box.style.display="";cats.forEach(function(c,k){var ts=inG.filter(function(it){return it.t.c===c;}),b=document.createElement("button");b.type="button";b.className="k"+(k%12);b.setAttribute("aria-pressed",String(c===cur));var ic=document.createElement("i");ic.textContent=sym(c);ic.setAttribute("aria-hidden","true");var w=document.createElement("span");w.className="tx";var s=document.createElement("b");s.textContent=c;var e=document.createElement("span");e.textContent=ts.slice(0,3).map(function(it){return it.t.t;}).join(", ")+(ts.length>3?" and more":"");w.appendChild(s);w.appendChild(e);var ar=document.createElement("em");ar.textContent="›";ar.setAttribute("aria-hidden","true");b.appendChild(ic);b.appendChild(w);b.appendChild(ar);b.onclick=function(){fn(c);};box.appendChild(b);});}
 function cards(items,badge){
   var box=$("topics");box.innerHTML="";
   items.forEach(function(it,k){var b=document.createElement("button");b.type="button";b.className="c"+(k%5);var ic=document.createElement("i");ic.textContent=sym(it.t.c);ic.setAttribute("aria-hidden","true");var w=document.createElement("span");w.className="tx";var s=document.createElement("b");s.textContent=it.t.t;var e=document.createElement("span");e.textContent=(badge?"Grade "+it.g+" · ":"")+it.t.d;w.appendChild(s);w.appendChild(e);b.appendChild(ic);b.appendChild(w);b.onclick=function(){launchOne(items,k);};box.appendChild(b);});
@@ -40,6 +41,10 @@ function render(){
   $("grades").style.display=(!q&&view==="grade")?"":"none";
   $("subjects").style.display=(!q&&view==="subject")?"":"none";
   $("pickLab").textContent=q?"Topics that match":(view==="grade"?"Pick a grade":"Pick a subject");
+  var gv=!q&&view==="grade";$("cats").className="cats"+(gv?" big":"");$("catH").parentNode.parentNode.style.display=gv?"":"none";
+  $("heroH").innerHTML=gv?'<span class="gp">Grade '+grade+'</span> Math':"Free math practice, Grades 1 to 12";
+  $("heroP").textContent=gv?"Learn, practice and master Grade "+grade+" math. Free, no sign-up, nothing saved.":"Learn how, practice, race the clock, or print a worksheet. No sign-up, nothing saved.";
+  $("tLab").textContent=q?"":"Pick a topic";
   if(q){
     $("cats").style.display="none";$("mix").style.display="none";
     cards(ALL.filter(function(it){return (it.t.t+" "+it.t.d+" "+it.t.c+" "+it.s+" grade "+it.g).toLowerCase().indexOf(q)>-1;}).slice(0,40),true);
@@ -51,9 +56,12 @@ function render(){
     var inG=ALL.filter(function(it){return it.g===grade;}),cats=[];
     inG.forEach(function(it){if(cats.indexOf(it.t.c)<0)cats.push(it.t.c);});
     if(cats.indexOf(band)<0)band=cats[0];
-    chips($("cats"),cats,band,function(c){band=c;render();});
-    cards(inG.filter(function(it){return it.t.c===band;}),false);
-    $("mix").textContent="Or mix all of Grade "+grade;
+    catCards($("cats"),cats,band,inG,function(c){band=c;render();try{$("mLab").scrollIntoView({behavior:"smooth",block:"start"});}catch(e){}});
+    var inB=inG.filter(function(it){return it.t.c===band;});
+    $("catH").textContent="Grade "+grade+" Math Topics";$("catN").textContent=cats.length+" topic groups · "+inG.length+" topics";
+    $("tLab").textContent=band+" · "+inB.length+" topic"+(inB.length>1?"s":"");
+    cards(inB,false);
+    $("mix").textContent="Mixed review: all of Grade "+grade;
     $("mix").onclick=function(){launchMix(inG,"Grade "+grade+" · Mix of everything");};
   }else{
     [].forEach.call($("subjects").children,function(b){b.setAttribute("aria-pressed",String(b.textContent===strand));});
@@ -77,8 +85,8 @@ function setup(){
   $("views").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;view=b.dataset.v;band=null;$("find").value="";render();});
   $("find").addEventListener("input",render);
 }
-var MD={learn:"See how to do it, step by step, with worked examples.",practice:"Each question shows how it is worked out. Every round has new questions.",challenge:"60 seconds on the clock. How many can you get?",sheet:"A printable page of questions with an answer key."};
-function setMode(m){mode=m;[].forEach.call($("modes").children,function(b){b.setAttribute("aria-pressed",String(b.dataset.m===m));});$("mdesc").textContent=MD[m];$("plen").style.display=m==="practice"?"":"none";if($("mix"))$("mix").style.display=(m==="learn"||$("find").value.trim())?"none":"";}
+var MD={adaptive:"Miss a question and you get an easier one on the same skill from the grade below. Then you come back and carry on.",learn:"See how to do it, step by step, with worked examples.",practice:"Each question shows how it is worked out. Every round has new questions.",challenge:"60 seconds on the clock. How many can you get?",sheet:"A printable page of questions with an answer key."};
+function setMode(m){mode=m;[].forEach.call($("modes").children,function(b){b.setAttribute("aria-pressed",String(b.dataset.m===m));});$("mdesc").textContent=MD[m];$("plen").style.display=(m==="practice"||m==="adaptive")?"":"none";if($("mix"))$("mix").style.display=(m==="learn"||$("find").value.trim())?"none":"";}
 function go(){if(mode==="learn"&&sel.pool.length===1)openLearn();else if(mode==="sheet")openSheet();else if(mode==="challenge")startChallenge();else startPractice();}
 function launchOne(items,k){sel={pool:[items[k]],label:"Grade "+items[k].g+" · "+items[k].t.t,list:items,pos:k};go();}
 function launchMix(items,label){sel={pool:items,label:label,list:[],pos:-1};go();}
@@ -116,7 +124,15 @@ function setHelp(on){
 }
 
 /* ----- practice ----- */
+/* ----- adaptive: a wrong answer opens an easier question on the same skill, one grade down, then two ----- */
+var LADDER={"8|Scientific notation":["7|Powers of ten","5|Times 10, 100, 1000"],"8|Square roots":["7|Perfect squares","6|Factors and multiples"],"8|Powers":["7|Perfect squares","6|Factors and multiples"],"8|Rational or irrational":["7|Perfect squares","7|Fractions to decimals"],"8|Fractions, decimals and percents":["7|Fractions to decimals","6|Percents and decimals"],"8|Order of operations with powers":["7|Order of operations with integers","6|Order of operations"],"8|Integer sums":["7|Mixed integer sums","6|Negative numbers: add"],"8|Adding and subtracting fractions":["5|Adding fractions","5|Simplest form"],"8|Multiplying and dividing fractions":["6|Multiplying fractions","5|Fraction of a number"],"8|Percent problems":["6|Percent of a number","5|Easy percents"],"8|Percent change":["7|Percent change","6|Percent of a number"],"8|Discounts":["7|Sale prices","6|Percent of a number"],"8|Integers: multiply and divide":["7|Integers × and ÷","6|Negative numbers: add"],"8|Equations with brackets":["7|Two-step equations","6|One-step equations"],"8|Two-step equations":["7|Two-step equations","6|One-step equations"],"8|Collecting like terms":["7|Collecting like terms","6|Plug in a number"],"8|Mean":["7|Mean","5|Average (mean)"],"8|Area of a circle":["7|Circles","6|Area of a triangle"],"8|Sales tax":["7|Tips and tax","6|Percent of a number"],"8|Rates and proportions":["7|Proportions","6|Price for one"],"7|Powers of ten":["5|Times 10, 100, 1000"],"7|Order of operations with integers":["6|Order of operations","5|Order of operations"],"7|Fractions to decimals":["6|Percents and decimals"],"7|Mixed integer sums":["6|Negative numbers: add","6|Negative numbers: subtract"],"7|Integers × and ÷":["6|Negative numbers: add"]};
+var ad={level:0,ok:true,base:null,help:0,helpOk:0};
+function findT(key){var k=key.split("|");for(var i=0;i<ALL.length;i++)if(ALL[i].g===+k[0]&&ALL[i].t.t===k[1])return ALL[i];return null;}
+function support(it,level){var L=LADDER[it.g+"|"+it.t.t];if(L){return L[level-1]?findT(L[level-1]):null;}var g=it.g-level;if(g<1)return null;var c=ALL.filter(function(z){return z.g===g&&z.s===it.s;});return c.length?pick(c):null;}
+function adNext(){if(ad.ok||ad.level>=2){ad.level=0;return false;}var it=support(ad.base,ad.level+1);if(!it){ad.level=0;return false;}ad.level++;cur=it.t.f();cur.it=it;typed="";locked=false;
+  $("qn").textContent="Easier one first · Grade "+it.g+" · "+it.t.t;putQ(cur);$("ans").textContent="";$("fb").className="fb";$("fb").innerHTML="";$("go").textContent="Check";setHelp(false);return true;}
 function startPractice(){
+  ad={level:0,ok:true,base:null,help:0,helpOk:0};
   ch.on=false;idx=0;right=0;results=[];missed=[];list=many(N);
   $("play").classList.remove("ch");
   $("tag").textContent=sel.label;
@@ -140,18 +156,21 @@ function check(){
   if(parse(typed)===null){feedback(false,"Type an answer first.","Use the number pad or a keyboard.");return;}
   var ok=isRight(typed,cur);
   if(!ok&&cur.x&&Math.abs(parse(typed)-cur.a)<1e-6){feedback(false,"Right value, but not the simplest form yet.","Divide the top and bottom by the same number and try again.");return;}
+  if(mode==="adaptive"&&ad.level>0){ad.help++;if(ok)ad.helpOk++;ad.ok=ok;locked=true;
+    feedback(ok,ok?"That is it! Now back to Grade "+ad.base.g+".":"Not quite. The answer is "+ansText(cur)+".",cur.h);
+    $("go").textContent=(!ok&&ad.level<2&&support(ad.base,ad.level+1))?"Try an easier one":"Back to Grade "+ad.base.g;return;}
   results[idx]=ok;if(ok)right++;else missed.push({q:cur,yours:show(typed)});
-  locked=true;
+  locked=true;ad.ok=ok;ad.base=cur.it;ad.level=0;
   feedback(ok,ok?praise():"Not quite. The answer is "+ansText(cur)+".",cur.h);
-  $("go").textContent=idx===N-1?"See score":"Next";dots();
+  $("go").textContent=(mode==="adaptive"&&!ok&&support(cur.it,1))?"Try an easier one":(idx===N-1?"See score":"Next");dots();
 }
-function next(){idx++;if(idx<N){showQ();return;}finishPractice();}
+function next(){if(mode==="adaptive"&&adNext())return;idx++;if(idx<N){showQ();return;}finishPractice();}
 function stars(k){var s="";for(var i=0;i<3;i++)s+=i<k?"★":"<i>★</i>";$("stars").innerHTML=s;}
 function finishPractice(){
   var pc=right/N;stars(pc===1?3:(pc>=.8?2:(pc>=.5?1:0)));
   $("score").textContent=right+" / "+N;
   $("doneMsg").textContent=pc===1?"Perfect score!":(pc>=.8?"Great work!":(pc>=.5?"Good effort!":"Keep practising!"));
-  $("doneSub").textContent=sel.label+". Every round has new questions.";
+  $("doneSub").textContent=sel.label+". "+(mode==="adaptive"&&ad.help?"Easier questions: "+ad.helpOk+" of "+ad.help+" right. ":"")+"Every round has new questions.";
   review();screen("done");$("again").focus();if(right/N>=.8)confetti();
 }
 function review(){

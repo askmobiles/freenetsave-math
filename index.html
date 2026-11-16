@@ -7,7 +7,7 @@
 <meta name="description" content="Free math practice for Grades 1 to 12. Pick a grade and topic, then practice, race the clock in a fun challenge, or print a worksheet with an answer key. No sign-up, nothing saved.">
 <link rel="canonical" href="https://math.freenetsave.com/">
 <meta name="theme-color" content="#2563eb">
-<link rel="stylesheet" href="style.css?v=9">
+<link rel="stylesheet" href="style.css?v=10">
 <link rel="manifest" href="/manifest.webmanifest">
 <meta name="theme-color" content="#2563EB">
 <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
@@ -21,9 +21,13 @@
 </div></header>
 
 <main>
-<section class="hero" id="hero"><div class="syms" aria-hidden="true"><i>+</i><i>−</i><i>×</i><i>÷</i></div>
-<h1>Free math practice, Grades 1 to 12</h1>
-<p>Learn how, practice, race the clock, or print a worksheet. No sign-up, nothing saved.</p>
+<section class="hero" id="hero">
+<div class="hero-tx">
+<h1 id="heroH">Free math practice, Grades 1 to 12</h1>
+<p id="heroP">Learn how, practice, race the clock, or print a worksheet. No sign-up, nothing saved.</p>
+<ul class="ticks"><li>Lessons and examples</li><li>Practice questions</li><li>Timed challenges</li><li>Printable worksheets</li></ul>
+</div>
+<svg class="art" viewBox="0 0 360 200" aria-hidden="true"><rect x="150" y="14" width="120" height="120" rx="10" fill="#fff" stroke="#c7d7f5" stroke-width="2"/><path d="M165 44h90M165 64h90M165 84h90M165 104h90M180 30v92M200 30v92M220 30v92M240 30v92" stroke="#e3ecfb" stroke-width="2"/><path d="M168 112l24-22 22 8 34-46" fill="none" stroke="#2563eb" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="168" cy="112" r="5" fill="#2563eb"/><circle cx="192" cy="90" r="5" fill="#2563eb"/><circle cx="214" cy="98" r="5" fill="#2563eb"/><circle cx="248" cy="52" r="5" fill="#2563eb"/><rect x="20" y="62" width="150" height="36" rx="8" fill="#2563eb"/><rect x="150" y="68" width="18" height="24" rx="3" fill="#eaf1ff"/><text x="44" y="87" font-size="19" font-weight="800" fill="#fff" font-family="inherit">Algebra</text><rect x="8" y="102" width="158" height="36" rx="8" fill="#f97316"/><rect x="146" y="108" width="18" height="24" rx="3" fill="#fff1e6"/><text x="30" y="127" font-size="19" font-weight="800" fill="#fff" font-family="inherit">Geometry</text><rect x="16" y="142" width="152" height="36" rx="8" fill="#16a34a"/><rect x="148" y="148" width="18" height="24" rx="3" fill="#e7f8ef"/><text x="46" y="167" font-size="19" font-weight="800" fill="#fff" font-family="inherit">Data</text><rect x="178" y="98" width="74" height="92" rx="10" fill="#1e3a8a"/><rect x="186" y="106" width="58" height="20" rx="4" fill="#bfdbfe"/><g fill="#60a5fa"><rect x="186" y="132" width="14" height="12" rx="3"/><rect x="208" y="132" width="14" height="12" rx="3"/><rect x="230" y="132" width="14" height="12" rx="3"/><rect x="186" y="150" width="14" height="12" rx="3"/><rect x="208" y="150" width="14" height="12" rx="3"/><rect x="186" y="168" width="14" height="12" rx="3"/><rect x="208" y="168" width="14" height="12" rx="3"/></g><rect x="230" y="150" width="14" height="30" rx="3" fill="#f97316"/><path d="M290 150l56 0 -56-70z" fill="#dbeafe" stroke="#2563eb" stroke-width="3" stroke-linejoin="round"/><path d="M290 138h12v12" fill="none" stroke="#2563eb" stroke-width="2"/><text x="276" y="40" font-size="26" font-weight="800" fill="#2563eb" font-family="inherit">x²</text><text x="268" y="184" font-size="17" font-weight="800" fill="#1e3a8a" font-family="inherit">a² + b² = c²</text></svg>
 </section>
 
 <section class="panel" id="pick">
@@ -36,18 +40,20 @@
 <div class="grades" id="grades" role="group" aria-label="Grades"></div>
 <div class="cats subj" id="subjects" role="group" aria-label="Subjects"></div>
 
-<p class="lab" id="mLab">Choose how</p>
+<div class="thead"><div><h2 id="catH">Topics</h2><p id="catSub">Choose a topic group to learn, practice and test your skills.</p></div><span class="count" id="catN"></span></div>
+<div class="cats" id="cats" role="group" aria-label="Topic groups"></div>
+<p class="lab" id="mLab">Choose how you want to work</p>
 <div class="modes" id="modes" role="group" aria-labelledby="mLab">
-<button type="button" data-m="learn" aria-pressed="false">Learn</button>
-<button type="button" data-m="practice" aria-pressed="true">Practice</button>
-<button type="button" data-m="challenge" aria-pressed="false">Fun challenge</button>
-<button type="button" data-m="sheet" aria-pressed="false">Worksheet</button>
+<button type="button" data-m="learn" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6c3-1.5 5.5-1.5 8 0v13c-2.5-1.5-5-1.5-8 0z M12 6c2.5-1.5 5-1.5 8 0v13c-3-1.5-5.5-1.5-8 0"/></svg>Learn</button>
+<button type="button" data-m="practice" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19l1-4L16 5l3 3L9 18z M14 7l3 3"/></svg>Practice</button>
+<button type="button" data-m="adaptive" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h5v-4h5v-4h6 M16 6l4 4-4 4"/></svg>Adaptive</button>
+<button type="button" data-m="challenge" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7"/><path d="M12 13.5V9.5 M10 3h4"/></svg>Fun challenge</button>
+<button type="button" data-m="sheet" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 9V4h10v5 M7 17H5v-7h14v7h-2 M7 14h10v6H7z"/></svg>Worksheet</button>
 </div>
 <p class="mdesc" id="mdesc"></p>
 <div class="plen" id="plen" role="group" aria-label="Questions in a round"><span>Questions in a round</span><button type="button" data-n="10" aria-pressed="true">10</button><button type="button" data-n="20" aria-pressed="false">20</button><button type="button" data-n="30" aria-pressed="false">30</button></div>
 
-<p class="lab">Pick a topic</p>
-<div class="cats" id="cats" role="group" aria-label="Topic groups"></div>
+<p class="lab" id="tLab">Pick a topic</p>
 <div class="tgrid" id="topics"></div>
 <p class="none" id="none">No topic matches that yet. Try a shorter word, like "area" or "percent".</p>
 <button type="button" class="mixbtn" id="mix"></button>
@@ -109,15 +115,15 @@
 <article class="sheet" id="sheet"></article>
 </section>
 
-<p class="note" id="note">New questions every time. They are made on your device, so nothing you type leaves it.</p>
+<ul class="trust" id="note"><li><b>100% free</b><span>No account needed</span></li><li><b>Safe and private</b><span>Questions are made on your device. Nothing you type leaves it.</span></li><li><b>Learn at your own pace</b><span>New questions every time</span></li></ul>
 </main>
 
 <footer class="ft"><div class="ft-in"><div><a href="https://freenetsave.com/">freenetsave.com</a><a href="https://freenetsave.com/about/">About</a><a href="https://freenetsave.com/privacy-policy/">Privacy</a><a href="https://freenetsave.com/contact/">Contact</a></div><span>© 2026 freenetsave.com</span></div></footer>
 
 <script>(function(){function orig(){var h=location.hostname,m=h.match(/^(.*)\.translate\.goog$/);if(!m)return location.href.split("#")[0];var host=m[1].replace(/--/g,"\u0000").replace(/-/g,".").replace(/\u0000/g,"-");return "https://"+host+location.pathname;}document.addEventListener("change",function(e){var s=e.target;if(!s.classList||!s.classList.contains("fns-lang")||!s.value)return;var u=orig();top.location.href=s.value==="en"?u:"https://translate.google.com/translate?sl=en&tl="+s.value+"&u="+encodeURIComponent(u);});})();</script>
-<script src="topics.js?v=5"></script>
-<script src="lessons.js?v=6"></script>
-<script src="app.js?v=7"></script>
+<script src="topics.js?v=7"></script>
+<script src="lessons.js?v=8"></script>
+<script src="app.js?v=10"></script>
 <script src="/pwa.js?v=1" defer></script>
 </body>
 </html>
