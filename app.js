@@ -97,7 +97,7 @@ function screen(name){
   $("done").classList.toggle("on",name==="done");
   $("sheetwrap").classList.toggle("on",name==="sheet");
   $("learn").classList.toggle("on",name==="learn");
-  document.body.classList.toggle("playing",name==="play");
+  document.body.classList.toggle("playing",name==="play");document.body.classList.toggle("inside",name!=="pick");
   var nx=sel.pos>-1&&sel.pos<sel.list.length-1?sel.list[sel.pos+1]:null;
   $("nextT").style.display=nx?"":"none";if(nx)$("nextT").textContent="Next topic: "+nx.t.t;
   var el={pick:"pick",play:"play",done:"done",sheet:"sheetwrap",learn:"learn"}[name];
