@@ -131,14 +131,18 @@ function showQ(){
   $("fb").className="fb";$("fb").innerHTML="";
   $("go").textContent="Check";dots();setHelp(false);
 }
-function feedback(ok,head,body){var fb=$("fb");fb.className="fb "+(ok?"ok":"no");fb.innerHTML="";var b=document.createElement("b");b.textContent=head;fb.appendChild(b);if(body){var s=document.createElement("span");s.textContent=body;fb.appendChild(s);}}
+var SND=true,AC=null,run=0;
+function snd(ok){if(!SND)return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();if(AC.state==="suspended")AC.resume();var t=AC.currentTime;(ok?[660,880,1320]:[220,165]).forEach(function(f,i){var o=AC.createOscillator(),g=AC.createGain();o.type=ok?"triangle":"sine";o.frequency.value=f;g.gain.setValueAtTime(0.0001,t+i*0.09);g.gain.exponentialRampToValueAtTime(0.16,t+i*0.09+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t+i*0.09+0.22);o.connect(g);g.connect(AC.destination);o.start(t+i*0.09);o.stop(t+i*0.09+0.25);});}catch(e){}}
+function praise(){run++;var p=pick(["Correct! ⭐","Great job! 🎉","You got it! 👍","Super! 🌟","Well done! 👏","Yes! 😀","Nice work! 💪"]);return run>=3?run+" in a row! 🔥 "+p:p;}
+(function(){var b=document.createElement("button");b.type="button";b.className="fns-snd";b.textContent="🔊";b.setAttribute("aria-label","Sound on. Tap to turn sound off.");b.style.cssText="position:fixed;right:14px;bottom:14px;z-index:99980;width:46px;height:46px;border-radius:50%;border:0;background:#fff;box-shadow:0 3px 12px rgba(23,32,51,.25);font-size:22px;cursor:pointer";b.onclick=function(){SND=!SND;b.textContent=SND?"🔊":"🔇";b.setAttribute("aria-label",SND?"Sound on. Tap to turn sound off.":"Sound off. Tap to turn sound on.");};function add(){document.body.appendChild(b);}if(document.body)add();else document.addEventListener("DOMContentLoaded",add);})();
+function feedback(ok,head,body){snd(ok);if(!ok)run=0;var fb=$("fb");fb.className="fb "+(ok?"ok":"no");fb.innerHTML="";var b=document.createElement("b");b.textContent=head;fb.appendChild(b);if(body){var s=document.createElement("span");s.textContent=body;fb.appendChild(s);}}
 function check(){
   if(parse(typed)===null){feedback(false,"Type an answer first.","Use the number pad or a keyboard.");return;}
   var ok=isRight(typed,cur);
   if(!ok&&cur.x&&Math.abs(parse(typed)-cur.a)<1e-6){feedback(false,"Right value, but not the simplest form yet.","Divide the top and bottom by the same number and try again.");return;}
   results[idx]=ok;if(ok)right++;else missed.push({q:cur,yours:show(typed)});
   locked=true;
-  feedback(ok,ok?pick(["Correct!","Right!","Well done!","Yes!","Nice work!"]):"Not quite. The answer is "+ansText(cur)+".",cur.h);
+  feedback(ok,ok?praise():"Not quite. The answer is "+ansText(cur)+".",cur.h);
   $("go").textContent=idx===N-1?"See score":"Next";dots();
 }
 function next(){idx++;if(idx<N){showQ();return;}finishPractice();}
@@ -180,7 +184,7 @@ function nextCh(){
 function checkCh(){
   if(parse(typed)===null)return;
   var ok=isRight(typed,cur);locked=true;
-  if(ok){right++;ch.streak++;ch.best=Math.max(ch.best,ch.streak);ch.score+=10+Math.min(ch.streak-1,5)*2;$("qcard").className="qcard flash-ok";}
+  if(ok){right++;ch.streak++;ch.best=Math.max(ch.best,ch.streak);ch.score+=10+Math.min(ch.streak-1,5)*2;$("qcard").className="qcard flash-ok";snd(true);}
   else{ch.streak=0;missed.push({q:cur,yours:show(typed)});$("qcard").className="qcard flash-no";feedback(false,"Answer: "+ansText(cur),"");}
   hud();
   ch.wait=setTimeout(function(){ch.wait=null;if(ch.on&&ch.timer)nextCh();},ok?280:1300);

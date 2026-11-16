@@ -27,6 +27,12 @@ function T(c,t,d,f){G[cur].push({c:c,t:t,d:d,f:f});}
 
 /* ---------- Grade 1 ---------- */
 grade(1);
+var PICS=["🍎","⭐","🐟","🌸","🍪","🚗","🐞","🎈","🍓","🧁"];
+function pics(e,k){return new Array(k+1).join(e);}
+function P(s){return '<span class="pic">'+s+'</span>';}
+T("Numbers","Count the pictures","How many can you see?",function(){var k=R(1,10),e=pick(PICS);return Q(P(pics(e,k))+sm("How many?"),k,"Point at each one and count: "+k+".");});
+T("Adding","Adding with pictures","Count them all",function(){var a=R(1,5),b=R(1,5),e=pick(PICS);return Q(P(pics(e,a)+" + "+pics(e,b)),a+b,a+" + "+b+" = "+(a+b)+". Count them all.");});
+T("Taking away","Taking away with pictures","Some are crossed out",function(){var a=R(2,9),b=R(1,a-1),e=pick(PICS);return Q(P(pics(e,a-b)+pics("❌",b))+sm("There were "+a+". "+b+" are crossed out. How many are left?"),a-b,a+" "+M+" "+b+" = "+(a-b)+".");});
 T("Numbers","What comes next","Count on by one",function(){var x=R(1,98);return Q("What comes after "+x+"?",x+1,"Count on one more: "+(x+1)+".");});
 T("Numbers","What comes before","Count back by one",function(){var x=R(2,99);return Q("What comes before "+x+"?",x-1,"Count back one: "+(x-1)+".");});
 T("Numbers","Which is bigger","Pick the bigger number",function(){var a=R(1,99),b;do{b=R(1,99);}while(b===a);return Q(a+" or "+b+sm("Type the bigger number"),Math.max(a,b),Math.max(a,b)+" is bigger than "+Math.min(a,b)+".");});
@@ -45,6 +51,8 @@ T("Word problems","Story problems","Adding and taking away",function(){var a=R(2
 
 /* ---------- Grade 2 ---------- */
 grade(2);
+T("Groups & sharing","Groups with pictures","Count equal groups",function(){var g=R(2,5),k=R(2,5),e=pick(PICS),s=[];for(var i=0;i<g;i++)s.push(pics(e,k));return Q(P(s.join(" &nbsp; "))+sm(g+" groups of "+k+". How many altogether?"),g*k,g+" groups of "+k+" is "+(g*k)+".");});
+T("Groups & sharing","Sharing with pictures","Share them fairly",function(){var k=R(2,4),each=R(1,4),e=pick(PICS);return Q(P(pics(e,k*each))+sm("Share these equally between "+k+" friends. How many does each friend get?"),each,(k*each)+" shared between "+k+" is "+each+" each.");});
 T("Numbers","Hundreds, tens, ones","Place value to 999",function(){var x=R(101,999),k=R(0,2);var nm=["ones","tens","hundreds"][k],v=Math.floor(x/Math.pow(10,k))%10;return Q("In "+x+", which digit is in the "+nm+" place?",v,x+" = "+Math.floor(x/100)+" hundreds, "+(Math.floor(x/10)%10)+" tens, "+(x%10)+" ones.");});
 T("Numbers","Build the number","Like 300 + 40 + 7",function(){var h=R(1,9),t=R(0,9),o=R(0,9);return Q((h*100)+" + "+(t*10)+" + "+o,h*100+t*10+o,h+" hundreds, "+t+" tens and "+o+" ones make "+(h*100+t*10+o)+".");});
 T("Numbers","Skip counting","By 3s, 4s and 100s",function(){var s=pick([3,4,100]),st=s*R(0,6);return Q(st+", "+(st+s)+", "+(st+2*s)+", ?",st+3*s,"Add "+s+" each time: "+(st+3*s)+".");});

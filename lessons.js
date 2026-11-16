@@ -1,5 +1,10 @@
 /* freenetsave math practice — short "how to do it" lessons. Key is "grade|topic" or just "topic". */
 window.FNS_LESSONS={
+"Count the pictures":["Point at the first picture and say 1.","Touch each picture once and say the next number.","The last number you say is how many there are."],
+"Adding with pictures":["Count the first group.","Keep counting on through the second group.","The last number you say is the total."],
+"Taking away with pictures":["The crossed-out pictures have been taken away.","Count only the pictures that are not crossed out.","That is how many are left."],
+"Groups with pictures":["Count how many are in one group.","Count how many groups there are.","Count them all, or skip count by the group size."],
+"Sharing with pictures":["Give one to each friend in turn.","Keep going until none are left.","Count how many one friend has."],
 /* Grade 1 */
 "What comes next":["Say the number.","Count one more.","That is the number that comes after."],
 "What comes before":["Say the number.","Count back one.","That is the number that comes before."],
