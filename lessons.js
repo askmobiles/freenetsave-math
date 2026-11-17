@@ -473,4 +473,22 @@ window.FNS_LESSONS={
 "Dot product":["Multiply the first parts together.","Multiply the second parts together.","Add the two results."],
 "Length of a vector":["Square each part.","Add the squares.","Take the square root."],
 "Determinant":["Multiply top-left by bottom-right.","Multiply top-right by bottom-left.","Take the second from the first."]
+,"6|Fraction of a number":["Divide the number by the bottom of the fraction.","Multiply the result by the top.","Example: 3/4 of 20 is 20 ÷ 4 = 5, then 5 × 3 = 15."],
+"6|Sharing in a ratio":["Add the ratio numbers to find the total number of parts.","Divide the amount by the number of parts to find one part.","Multiply one part by each ratio number."],
+"6|Angles in a triangle":["The three angles of any triangle add to 180°.","Add the two angles you know.","Subtract that from 180."],
+"7|Subtracting fractions: different bottoms":["Find a common denominator.","Change both fractions so they have that denominator.","Subtract the tops and simplify."],
+"7|Working backwards from a rule":["Start from the output.","Undo the last step first.","Then undo the step before it."],
+"7|Volume of a cylinder":["Find the area of the circle: π × radius × radius.","Multiply by the height.","Leave π in the answer when the question asks for it."],
+"10|Equation of a circle":["A circle centred at the origin has the equation x² + y² = r².","The number on the right is the radius squared.","Take its square root to get the radius."],
+"10|Line through two points":["Find the slope: change in y divided by change in x.","Put one point into y = mx + b.","Solve for b, the y-intercept."],
+"10|Volume of a sphere":["Cube the radius.","Multiply by 4 and divide by 3.","Multiply by π."],
+"10|Angle of elevation":["Draw a right triangle: the distance is along the ground, the height goes up.","tan of the angle = height ÷ distance.","So height = distance × tan of the angle."],
+"11|Area of a triangle with sine":["Use two sides and the angle between them.","Area = ½ × a × b × sin C.","sin 30° and sin 150° are both 0.5, and sin 90° is 1."],
+"11|Dividing radicals":["Put both numbers under one square root.","Divide them.","Take the square root of the result."],
+"11|Missing term in a geometric sequence":["In a geometric sequence you multiply by the same number each time.","The middle term squared equals the product of the terms on each side.","Take the square root of that product."],
+"11|Compounding periods":["Find how many times a year interest is added.","Monthly is 12, quarterly is 4, semi-annually is 2, weekly is 52.","Multiply by the number of years."],
+"12|Product rule":["For f = u × v, the derivative is u′v + uv′.","Differentiate each bracket in turn and keep the other.","Add the two parts, then put in the x value."],
+"12|Equation of a tangent":["Differentiate to get the slope at the point.","Find the y value of the point on the curve.","Use b = y − mx to get the y-intercept."],
+"12|Perpendicular vectors":["Two vectors are perpendicular when their dot product is 0.","Multiply matching parts and add them.","Set the total equal to 0 and solve for k."],
+"12|Binomial expansion":["The coefficient of xᵏ in (1 + x)ⁿ is the number of ways to choose k from n.","Use n! ÷ (k! × (n − k)!).","You can also read it from row n of Pascal's triangle."]
 };
