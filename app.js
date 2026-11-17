@@ -10,7 +10,7 @@ var list=[],idx=0,right=0,cur=null,typed="",locked=false,results=[],missed=[];
 var ch={on:false,left:60,score:0,streak:0,best:0,count:0,timer:null,wait:null},sessionBest={};
 
 /* every topic, with its grade and its all-grades subject */
-var SUBJ=[[/Word/,"Word problems"],[/Trig/,"Trigonometry"],[/Calculus|Vectors/,"Calculus & vectors"],[/Money &|Percent|Ratio|Financial/,"Percent, ratio & money"],[/Data|Chance|Counting/,"Data & chance"],[/Fraction|Decimal/,"Fractions & decimals"],[/Adding|Taking/,"Adding & subtracting"],[/Times|Groups/,"Multiplying & dividing"],[/Measur|Shapes, money|Money, time/,"Measuring, time & money"],[/Geometry|Coordinate/,"Geometry"],[/^Numbers$|Number sense|Whole numbers|Integers/,"Numbers & place value"]];
+var SUBJ=[[/Word/,"Word problems"],[/Trig/,"Trigonometry"],[/Calculus|Vectors/,"Calculus & vectors"],[/Money &|Percent|Ratio|Financial/,"Percent, ratio & money"],[/Data|Chance|Counting/,"Data & chance"],[/Fraction|Decimal/,"Fractions & decimals"],[/Adding|Taking/,"Adding & subtracting"],[/Times|Groups|Multiplying/,"Multiplying & dividing"],[/Measur|Shapes, money|Money, time/,"Measuring, time & money"],[/Geometry|Coordinate/,"Geometry"],[/^Numbers$|Number sense|Whole numbers|Integers/,"Numbers & place value"]];
 var ORDER=["Numbers & place value","Adding & subtracting","Multiplying & dividing","Fractions & decimals","Percent, ratio & money","Measuring, time & money","Geometry","Algebra & equations","Data & chance","Trigonometry","Calculus & vectors","Word problems"];
 var ALL=[];
 (function(){for(var g=1;g<=12;g++)G[g].forEach(function(t){var s="Algebra & equations";for(var i=0;i<SUBJ.length;i++)if(SUBJ[i][0].test(t.c)){s=SUBJ[i][1];break;}ALL.push({g:g,t:t,s:s});});})();
@@ -42,7 +42,7 @@ function render(){
   $("subjects").style.display=(!q&&view==="subject")?"":"none";
   $("pickLab").textContent=q?"Topics that match":(view==="grade"?"Pick a grade":"Pick a subject");
   var gv=!q&&view==="grade";$("cats").className="cats"+(gv?" big":"");$("catH").parentNode.parentNode.style.display=gv?"":"none";
-  var hr=$("hero");if(gv){hr.style.backgroundImage="url(banners/"+(grade>=6?"older":"younger")+".jpg?v=3)";hr.classList.add("pic");}else{hr.style.backgroundImage="";hr.classList.remove("pic");}
+  var hr=$("hero");if(gv){hr.style.backgroundImage="url(banners/"+(grade>=6?"older":"younger")+".jpg?v=4)";hr.classList.add("pic");}else{hr.style.backgroundImage="";hr.classList.remove("pic");}
   $("heroH").innerHTML=gv?'<span class="gp">Grade '+grade+'</span> Math':"Free math practice, Grades 1 to 12";
   $("heroP").textContent=gv?"Learn, practice and master Grade "+grade+" math. Free, no sign-up, nothing saved.":"Learn how, practice, race the clock, or print a worksheet. No sign-up, nothing saved.";
   $("tLab").textContent=q?"":"Pick a topic";
