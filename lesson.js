@@ -57,7 +57,7 @@ function match(root){if(!root||!L.game)return;
 function challenge(root){if(!root||!L.challenge)return;var solved=0;
   L.challenge.forEach(function(c,k){var d=el("div","ch qz"),p=el("p","q",(k+1)+". "+c.q);d.appendChild(p);var fb=el("div");fb.setAttribute("aria-live","polite");
     function act(){var v=norm(f.inp.value);if(parse(v)===null){fb.className="fb no";fb.innerHTML="<b>Type an answer first.</b>";return;}var r=Math.abs(parse(v)-c.a)<1e-6;fb.className="fb "+(r?"ok":"no");
-      fb.innerHTML=r?"<b>Correct!</b>"+c.h:"<b>Not yet.</b>"+(d.tries?c.h+" The answer is "+String(c.a).replace("-","−")+".":"Have another go. "+(c.hint||""));d.tries=1;if(r&&!d.ok){d.ok=1;solved++;if(solved===L.challenge.length)mark("challenge",true);}}
+      fb.innerHTML=r?"<b>Correct!</b>"+c.h:"<b>Not yet.</b>"+(d.tries?c.h+" The answer is "+(c.show||String(c.a).replace("-","\u2212"))+".":"Have another go. "+(c.hint||""));d.tries=1;if(r&&!d.ok){d.ok=1;solved++;if(solved===L.challenge.length)mark("challenge",true);}}
     var f=field(d,act),b=el("button","btn2","Check");b.type="button";b.onclick=act;f.row.appendChild(b);d.appendChild(fb);root.appendChild(d);});}
 
 function unit(){var o=load();document.querySelectorAll(".ul a[data-id]").forEach(function(a){var r=o[a.getAttribute("data-id")]||{};if(r.test>=8){a.classList.add("isdone");var n=a.querySelector(".num");if(n)n.textContent="✓";var s=a.querySelector(".d");if(s)s.textContent+="  ·  Complete (best test score "+r.test+" out of 10)";}});}
