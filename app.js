@@ -91,8 +91,9 @@ function setMode(m){mode=m;[].forEach.call($("modes").children,function(b){b.set
 function go(){if(mode==="learn"&&sel.pool.length===1)openLearn();else if(mode==="sheet")openSheet();else if(mode==="challenge")startChallenge();else startPractice();}
 function launchOne(items,k){sel={pool:[items[k]],label:"Grade "+items[k].g+" · "+items[k].t.t,list:items,pos:k};go();}
 function launchMix(items,label){sel={pool:items,label:label,list:[],pos:-1};go();}
+var onPick=true;function histStep(name){var p=name==="pick";try{if(!p&&onPick)history.pushState({fnsAct:1},"",location.href);}catch(e){}onPick=p;}
 function screen(name){
-  stopClock();
+  stopClock();histStep(name);
   $("pick").style.display=name==="pick"?"":"none";
   $("play").classList.toggle("on",name==="play");
   $("done").classList.toggle("on",name==="done");
@@ -267,7 +268,9 @@ $("snew").onclick=function(){buildSheet(true);};
 $("sprint").onclick=function(){window.print();};
 
 /* ----- wiring ----- */
-function toTopics(){screen("pick");}
+function rawTopics(){screen("pick");}
+function toTopics(){var st=null;try{st=history.state;}catch(e){}if(!onPick&&st&&st.fnsAct){history.back();return;}rawTopics();}
+window.addEventListener("popstate",function(){if(!onPick)rawTopics();});
 $("back").onclick=toTopics;$("other").onclick=toTopics;$("sback").onclick=toTopics;
 $("again").onclick=function(){if(mode==="challenge")startChallenge();else startPractice();};
 $("toSheet").onclick=function(){openSheet();};
