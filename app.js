@@ -59,7 +59,7 @@ function render(){
     if(cats.indexOf(band)<0)band=cats[0];
     catCards($("cats"),cats,band,inG,function(c){band=c;render();try{$("mLab").scrollIntoView({behavior:"smooth",block:"start"});}catch(e){}});
     var inB=inG.filter(function(it){return it.t.c===band;});
-    $("catH").textContent="Grade "+grade+" Math Topics";$("catN").textContent=cats.length+" topic groups · "+inG.length+" topics";
+    $("catH").textContent="Grade "+grade+" Math Topics";var cs=$("catSub");if(cs){cs.innerHTML=grade<=8?'Choose a topic group to learn, practice and test your skills. <a class="glink" style="margin-left:6px;font-weight:800;color:#1d4ed8;text-decoration:none;border-bottom:2px solid #93c5fd" href="/grade-'+grade+'/">Open the full Grade '+grade+' lessons \u2192</a>':"Choose a topic group to practice and test your skills.";}$("catN").textContent=cats.length+" topic groups · "+inG.length+" topics";
     $("tLab").textContent=band+" · "+inB.length+" topic"+(inB.length>1?"s":"");
     cards(inB,false);
     $("mix").textContent="Mixed review: all of Grade "+grade;
@@ -113,8 +113,12 @@ function examples(){
   var box=$("lex");box.innerHTML="";
   many(3).forEach(function(q){var d=document.createElement("div");d.className="ex";var a=document.createElement("div");a.className="exq";a.innerHTML=q.q;var b=document.createElement("p");var s=document.createElement("b");s.textContent="Answer: "+ansText(q);b.appendChild(s);var c=document.createElement("p");c.textContent=q.h;d.appendChild(a);d.appendChild(b);d.appendChild(c);box.appendChild(d);});
 }
+function slugT(t){t=t.toLowerCase().replace(/&/g,"and").replace(/\u00f7/g," divide ").replace(/\u00d7/g," times ").replace(/\+/g," plus ").replace(/%/g," percent ");t=t.replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");return t||"topic";}
+var LSLUG={"8|Rational or irrational":"rational-and-irrational-numbers","8|Integer sums":"adding-and-subtracting-integers","8|Integers: multiply and divide":"multiplying-and-dividing-integers"};
+function lessonURL(it){if(!it||it.g<1||it.g>8)return "";return "/grade-"+it.g+"/"+slugT(it.t.c)+"/"+(LSLUG[it.g+"|"+it.t.t]||slugT(it.t.t))+"/";}
 function openLearn(){
   var it=sel.pool[0];
+  var lu=lessonURL(it);if(lu){location.href=lu;return;}
   $("ltag").textContent="Grade "+it.g+" \u00b7 "+it.t.c;$("ltitle").textContent=it.t.t;
   fillSteps($("lsteps"),it);examples();screen("learn");
 }
