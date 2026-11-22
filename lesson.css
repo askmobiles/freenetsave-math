@@ -43,3 +43,4 @@
 #challenge{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:0 24px}#challenge .ch{border-top:0}
 @media (min-width:1000px){.ls section{padding:24px 28px}.qz .qq{font-size:32px}.mt{gap:12px 28px}}
 @media (max-width:820px){.ul{grid-template-columns:1fr}}
+.vt{display:block;max-width:100%;overflow-x:auto}
