@@ -62,5 +62,11 @@ function challenge(root){if(!root||!L.challenge)return;var solved=0;
 
 function unit(){var o=load();document.querySelectorAll(".ul a[data-id]").forEach(function(a){var r=o[a.getAttribute("data-id")]||{};if(r.test>=8){a.classList.add("isdone");var n=a.querySelector(".num");if(n)n.textContent="✓";var s=a.querySelector(".d");if(s)s.textContent+="  ·  Complete (best test score "+r.test+" out of 10)";}});}
 function init(){if(L){see();quiz($("#try"),false);match($("#play"));quiz($("#test"),true);challenge($("#challenge"));var id=L.unit+"/"+L.slug,r=load()[id]||{};if(r.test>=8){var nb=$("#nextbox");if(nb)nb.hidden=false;}mark("learn",true);}else unit();}
+
+(function(){if(!L||!L.topic)return;var nav=document.querySelector(".ls-steps");if(!nav)return;
+ var st=document.createElement("style");st.textContent=".mbar2{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:10px 0 4px}.mbar2>span{font-weight:700;color:var(--muted,#5b6b85);font-size:14px;margin-right:4px}.mbar2 a{border:1.5px solid #dde5f2;background:#fff;border-radius:999px;padding:7px 13px;font-weight:700;font-size:15px;color:#172033;text-decoration:none}.mbar2 a:hover{border-color:#2563eb;color:#2563eb}.mbar2 a.on{background:#2563eb;border-color:#2563eb;color:#fff}@media print{.mbar2{display:none}}";document.head.appendChild(st);
+ var base="/#t="+L.g+"/"+encodeURIComponent(L.topic)+"&m=";var d=document.createElement("div");d.className="mbar2";d.setAttribute("aria-label","Choose how you want to work");
+ d.innerHTML="<span>Choose how you want to work:</span>"+[["#learn","📖 Learn",1],[base+"practice","✏️ Practice"],[base+"adaptive","📈 Adaptive"],[base+"challenge","⏱️ Fun challenge"],[base+"sheet","🖨️ Worksheet"]].map(function(x){return '<a href="'+x[0]+'"'+(x[2]?' class="on"':'')+'>'+x[1]+"</a>";}).join("");
+ nav.parentNode.insertBefore(d,nav.nextSibling);})();
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
 })();

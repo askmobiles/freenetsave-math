@@ -93,7 +93,7 @@ function launchOne(items,k){sel={pool:[items[k]],label:"Grade "+items[k].g+" · 
 function launchMix(items,label){sel={pool:items,label:label,list:[],pos:-1};go();}
 var onPick=true;function histStep(name){var p=name==="pick";try{if(!p&&onPick)history.pushState({fnsAct:1},"",location.href);}catch(e){}onPick=p;}
 function screen(name){
-  stopClock();histStep(name);
+  stopClock();histStep(name);setTimeout(function(){mbarSync(name);},0);
   $("pick").style.display=name==="pick"?"":"none";
   $("play").classList.toggle("on",name==="play");
   $("done").classList.toggle("on",name==="done");
@@ -115,7 +115,8 @@ function examples(){
 }
 function slugT(t){t=t.toLowerCase().replace(/&/g,"and").replace(/\u00f7/g," divide ").replace(/\u00d7/g," times ").replace(/\+/g," plus ").replace(/%/g," percent ");t=t.replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");return t||"topic";}
 var LSLUG={"8|Rational or irrational":"rational-and-irrational-numbers","8|Integer sums":"adding-and-subtracting-integers","8|Integers: multiply and divide":"multiplying-and-dividing-integers"};
-function lessonURL(it){if(!it||it.g<1||it.g>8)return "";return "/grade-"+it.g+"/"+slugT(it.t.c)+"/"+(LSLUG[it.g+"|"+it.t.t]||slugT(it.t.t))+"/";}
+var LURL={"9|Plug in a number": "/grade-9/algebraic-expressions/evaluating-expressions/", "9|Adding polynomials": "/grade-9/algebraic-expressions/adding-and-subtracting-polynomials/", "9|Multiplying monomials": "/grade-9/algebraic-expressions/multiplying-monomials/", "9|Expanding brackets": "/grade-9/algebraic-expressions/expanding-binomials/", "9|Factoring": "/grade-9/algebraic-expressions/factoring-expressions/", "9|Multi-step equations": "/grade-9/equations-and-inequalities/multi-step-equations/", "9|x on both sides": "/grade-9/equations-and-inequalities/variables-on-both-sides/", "9|Equations with fractions": "/grade-9/equations-and-inequalities/equations-with-fractions/", "9|Inequalities": "/grade-9/equations-and-inequalities/solving-inequalities/", "9|Two equations": "/grade-9/equations-and-inequalities/solving-two-equations/", "9|Points on a line": "/grade-9/linear-relationships/points-on-a-line/", "9|Slope": "/grade-9/linear-relationships/slope-of-a-line/", "9|y-intercept": "/grade-9/linear-relationships/y-intercept/", "9|x-intercept": "/grade-9/linear-relationships/x-intercept/", "9|First differences": "/grade-9/linear-relationships/first-differences/", "9|Perpendicular slopes": "/grade-9/linear-relationships/parallel-and-perpendicular-lines/"};
+function lessonURL(it){if(it&&LURL[it.g+"|"+it.t.t])return LURL[it.g+"|"+it.t.t];if(!it||it.g<1||it.g>8)return "";return "/grade-"+it.g+"/"+slugT(it.t.c)+"/"+(LSLUG[it.g+"|"+it.t.t]||slugT(it.t.t))+"/";}
 function openLearn(){
   var it=sel.pool[0];
   var lu=lessonURL(it);if(lu){location.href=lu;return;}
@@ -283,7 +284,21 @@ $("plen").addEventListener("click",function(e){var b=e.target.closest("button");
 $("help").onclick=function(){setHelp($("help").getAttribute("aria-expanded")!=="true");};
 $("lback").onclick=toTopics;$("lmore").onclick=examples;$("lprac").onclick=function(){startPractice();};$("lsheet").onclick=function(){openSheet();};
 $("nextT").onclick=function(){launchOne(sel.list,sel.pos+1);};
+
+var DEEPH="";try{DEEPH=decodeURIComponent(location.hash||"");}catch(e){}
+/* ----- "Choose how you want to work" bar on every screen ----- */
+var MB=[["learn","📖 Learn"],["practice","✏️ Practice"],["adaptive","📈 Adaptive"],["challenge","⏱️ Fun challenge"],["sheet","🖨️ Worksheet"]];
+(function(){var st=document.createElement("style");st.textContent=".mbar{display:none;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 14px}body.inside .mbar{display:flex}.mbar>span{font-weight:700;color:var(--muted);font-size:14px;margin-right:4px}.mbar button{border:1.5px solid var(--line,#dde5f2);background:#fff;border-radius:999px;padding:8px 14px;font:inherit;font-weight:700;font-size:15px;color:var(--navy,#172033);cursor:pointer}.mbar button:hover{border-color:var(--brand,#2563eb)}.mbar button[aria-pressed=true]{background:var(--brand,#2563eb);border-color:var(--brand,#2563eb);color:#fff}@media print{.mbar{display:none!important}}";document.head.appendChild(st);
+var b=document.createElement("div");b.id="mbar";b.className="mbar";b.setAttribute("role","group");b.setAttribute("aria-label","Choose how you want to work");
+b.innerHTML="<span>Choose how you want to work:</span>"+MB.map(function(x){return '<button type="button" data-m="'+x[0]+'" aria-pressed="false">'+x[1]+"</button>";}).join("");
+var p=$("play");p.parentNode.insertBefore(b,p);
+b.addEventListener("click",function(e){var t=e.target.closest("button");if(!t||!sel||!sel.pool)return;setMode(t.dataset.m);go();});})();
+function mbarSync(name){var b=$("mbar");if(!b)return;var cur=name==="learn"?"learn":name==="sheet"?"sheet":(ch&&ch.on)?"challenge":mode==="adaptive"?"adaptive":"practice";
+ [].forEach.call(b.querySelectorAll("button"),function(x){x.setAttribute("aria-pressed",String(name!=="pick"&&x.dataset.m===cur));if(x.dataset.m==="learn")x.style.display=(sel&&sel.pool&&sel.pool.length===1)?"":"none";});}
 setup();setMode("practice");
 var m=location.hash.match(/^#g(\d+)$/);if(m&&G[+m[1]])grade=+m[1];if(location.hash==="#topics")view="subject";
 render();
+/* deep link from lesson pages: #t=<grade>/<topic>&m=<mode> */
+(function(){var m=DEEPH.match(/^#t=(\d+)\/([^&]+)(?:&m=(\w+))?$/);if(!m||!G[+m[1]])return;var g=+m[1],list=G[g].map(function(t){return {g:g,t:t};}),k=-1;
+ list.forEach(function(it,i){if(it.t.t===m[2])k=i;});if(k<0)return;grade=g;render();if(m[3]&&MD[m[3]])setMode(m[3]);launchOne(list,k);})();
 })();
