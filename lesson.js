@@ -45,7 +45,7 @@ function match(root){if(!root||!L.game)return;
   function start(){root.innerHTML="";var A=el("div"),B=el("div"),sel=null,left=L.game.length,grid=el("div","mt"),msg=el("p");msg.setAttribute("aria-live","polite");msg.style.marginTop="10px";
     function mk(txt,id,side){var b=el("button","",txt);b.type="button";b.onclick=function(){if(b.classList.contains("hit"))return;
         if(!sel||sel.side===side){if(sel)sel.b.classList.remove("sel");sel={b:b,id:id,side:side};b.classList.add("sel");return;}
-        if(sel.id===id){[b,sel.b].forEach(function(x){x.classList.remove("sel");x.classList.add("hit");x.disabled=true;});left--;msg.textContent=left?left+" to go.":"All matched. Well done!";if(!left){mark("play",true);var r=el("button","btn2 alt","Play again");r.type="button";r.style.marginTop="10px";r.onclick=start;root.appendChild(r);}}
+        if(sel.id===id||L.game[sel.id][0]===L.game[id][0]||L.game[sel.id][1]===L.game[id][1]){[b,sel.b].forEach(function(x){x.classList.remove("sel");x.classList.add("hit");x.disabled=true;});left--;msg.textContent=left?left+" to go.":"All matched. Well done!";if(!left){mark("play",true);var r=el("button","btn2 alt","Play again");r.type="button";r.style.marginTop="10px";r.onclick=start;root.appendChild(r);}}
         else{var o=sel.b;[b,o].forEach(function(x){x.classList.add("miss");});setTimeout(function(){[b,o].forEach(function(x){x.classList.remove("miss","sel");});},500);msg.textContent="Not a match. Try again.";}
         sel=null;};return b;}
     shuffle(L.game.map(function(p,k){return [p[0],k];})).forEach(function(p){A.appendChild(mk(p[0],p[1],"a"));});
