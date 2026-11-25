@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Free Math Quiz and Test Maker, Grades 1 to 12: Easy, Medium, Hard | freenetsave</title>
+<meta name="description" content="Make a free math quiz or test in one click. Pick a grade and topics, choose Easy, Medium or Hard, then take it online with instant marking and worked answers, or print it with an answer key. Grades 1 to 12.">
+<link rel="canonical" href="https://math.freenetsave.com/quiz/">
+<meta name="theme-color" content="#2563eb">
+<link rel="stylesheet" href="/style.css?v=14">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Math quiz and test maker","url":"https://math.freenetsave.com/quiz/","applicationCategory":"EducationalApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"CAD"},"educationalLevel":"Grades 1 to 12","description":"Make a math quiz or test from any topics, at Easy, Medium or Hard level, and take it online or print it with an answer key."}</script>
+<style>
+.qhero .crumbs{font-size:14px;margin:0 0 6px;color:var(--muted)}.qhero .crumbs a{color:var(--blue-d)}
+.qh2{font-size:20px;margin:22px 0 10px;color:var(--navy)}
+.qgrades button{position:relative}.qgrades sup{position:absolute;top:-6px;right:-6px;background:var(--orange);color:#fff;border-radius:999px;font-size:11px;min-width:18px;height:18px;line-height:18px;padding:0 4px}
+.qcols{display:grid;grid-template-columns:1fr 360px;gap:28px;align-items:start}
+.qtop{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.qtop .qh2{margin-bottom:0}
+.qlnk{border:0;background:none;color:var(--blue-d);font-weight:700;font-size:15px;cursor:pointer;padding:4px}
+.qhint{color:var(--muted);margin:4px 0 14px}
+.qg{border:1px solid var(--line);border-radius:16px;margin-bottom:12px;overflow:hidden}
+.qgh{display:flex;align-items:center;gap:10px;background:var(--soft);padding:12px 16px;font-weight:800;cursor:pointer}.qgh small{margin-left:auto;color:var(--muted);font-weight:600}
+.qgl{display:grid;grid-template-columns:1fr 1fr;gap:2px 16px;padding:10px 16px}
+.qt{display:flex;gap:10px;align-items:flex-start;padding:7px 0;cursor:pointer}.qt b{display:block;font-size:15px}.qt em{display:block;font-style:normal;font-size:13px;color:var(--muted)}
+.qt input,.qgh input{width:20px;height:20px;flex:none;accent-color:var(--blue);margin-top:2px}
+.qside{position:sticky;top:14px;background:#f8fafc;border:1px solid var(--line);border-radius:20px;padding:20px}.qside .qh2{margin-top:0}
+.qsum{font-weight:700;color:var(--navy);margin:0 0 12px}
+.qopt{margin:12px 0}.qopt>span{display:block;font-weight:700;font-size:14px;color:var(--muted);margin-bottom:6px}
+.qchips{display:flex;flex-wrap:wrap;gap:6px}.qchips button{border:2px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-weight:700;font-size:15px;cursor:pointer}.qchips button[aria-pressed=true]{background:var(--blue);border-color:var(--blue);color:#fff}
+.qmdesc{font-size:14px;color:var(--muted);margin:2px 0 8px}
+.qbig{display:block;width:100%;margin-top:16px;border:0;border-radius:14px;background:var(--orange);color:#fff;font-weight:800;font-size:18px;padding:14px;cursor:pointer}.qbig:hover{background:var(--orange-d)}.qbig:disabled,.qsec:disabled{opacity:.45;cursor:not-allowed}
+.qrow2{display:flex;gap:8px;margin-top:8px}.qsec{flex:1;border:2px solid var(--blue);background:#fff;color:var(--blue-d);border-radius:12px;padding:10px 12px;font-weight:800;font-size:15px;cursor:pointer}
+.qkey{display:flex;gap:8px;align-items:center;margin-top:10px;font-size:14px}.qnote{font-size:13px;color:var(--muted);margin:10px 0 0}
+.qfrom{background:#fff7ed;border:1px solid #fdba74;border-radius:12px;padding:12px 16px;margin:0 0 10px}
+.qsh{margin-top:30px}.qsamples{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+.qs{text-align:left;border:1px solid var(--line);background:#fff;border-radius:14px;padding:14px 16px;cursor:pointer}.qs:hover{border-color:var(--blue)}.qs b{display:block;color:var(--navy)}.qs span{font-size:13px;color:var(--muted)}
+.rtop{display:flex;align-items:center;gap:16px;flex-wrap:wrap}.rtop h2{margin:0;font-size:22px}.rtop p{margin:2px 0 0;color:var(--muted);font-size:14px}.rtop>div{flex:1}
+.rclock{font-weight:800;font-size:22px;background:var(--soft);border-radius:12px;padding:6px 14px;color:var(--blue-d)}.rclock.low{background:var(--bad-bg);color:#b91c1c}
+.rpw{display:flex;align-items:center;gap:12px;margin:16px 0 6px;font-weight:700;color:var(--muted);font-size:14px}.rpw i{flex:1;height:10px;background:var(--soft);border-radius:99px;overflow:hidden}.rpw u{display:block;height:100%;width:0;background:var(--blue);transition:width .2s}
+.rtip{font-size:14px;color:var(--muted);margin:0 0 14px}
+.rq,.xr{border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-bottom:12px;background:#fff}.rq.ok,.xr.ok{border-color:#86efac;background:#f0fdf4}.rq.no,.xr.no{border-color:#fca5a5;background:#fef2f2}
+.rqh,.xrh{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}.rnum{background:var(--blue);color:#fff;font-weight:800;border-radius:999px;min-width:30px;height:30px;line-height:30px;text-align:center;font-size:14px}.rtp{font-size:13px;color:var(--muted);font-weight:700}.xrh b{margin-left:auto;font-size:14px}
+.rqq{font-size:19px;line-height:1.5}
+.rrow{display:flex;gap:8px;margin-top:10px}.rrow input{flex:1;max-width:280px;font-size:18px;padding:10px 12px;border:2px solid var(--line);border-radius:12px}.rrow input:focus{outline:none;border-color:var(--blue)}
+.rchk{border:0;background:var(--blue);color:#fff;font-weight:800;border-radius:12px;padding:10px 18px;cursor:pointer}.rchk:disabled{opacity:.5}
+.rfb{margin-top:8px;font-size:15px}.rfb.good b{color:var(--good)}.rfb.bad b{color:#b91c1c}.rfb span{display:block;color:var(--muted);margin-top:4px}.rfb.warn{color:#b45309}
+.xhead{display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start}.xhead>div:first-child{flex:1;min-width:260px}.xhead h2{font-size:28px;margin:4px 0}.xhead em{font-style:normal;color:var(--blue-d)}.xlab{margin:0;color:var(--muted);font-weight:700}
+.xbtns{display:grid;gap:8px;width:320px}.xbtns .qbig{margin-top:0}
+.xtopics{display:grid;gap:8px}.xt{display:grid;grid-template-columns:1fr 60px 200px;align-items:center;gap:12px}.xt i{height:10px;background:var(--soft);border-radius:99px;overflow:hidden}.xt u{display:block;height:100%}.xt u.g{background:#16a34a}.xt u.m{background:#f59e0b}.xt u.b{background:#dc2626}.xt small{color:var(--muted)}
+.rqq small,.xr .rqq small{display:block;font-size:15px;color:var(--muted);margin-top:6px}.xa{margin:8px 0 0}.xh{margin:4px 0 0;color:var(--muted);font-size:15px}
+.qabout{margin-top:24px}.qabout h2{margin-top:0}
+#qprintout{display:none}
+@media (max-width:900px){.qcols{grid-template-columns:1fr}.qside{position:static}.qgl{grid-template-columns:1fr}.xbtns{width:100%}.xt{grid-template-columns:1fr 50px 90px}}
+@media print{
+ body>*:not(#qprintout){display:none!important}#qprintout{display:block!important}
+ .ps{font-family:Arial,sans-serif;color:#000}.pkey{page-break-before:always}
+ .pst{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid #000;padding-bottom:6px}.pst h2{font-size:20px;margin:0}.pst span{font-size:12px}
+ .psm{display:flex;gap:24px;margin:14px 0 18px;font-size:14px}.psm span{display:flex;gap:6px;align-items:flex-end}.psm i{display:inline-block;width:160px;border-bottom:1px solid #000}.psm i.sm{width:50px}
+ .psq{list-style:none;padding:0;margin:0;columns:2;column-gap:32px}.psq li{break-inside:avoid;display:flex;gap:8px;align-items:flex-start;margin-bottom:22px;font-size:15px;flex-wrap:wrap}.psq u{display:block;width:100%;border-bottom:1px solid #999;height:26px;text-decoration:none}
+ .psk{columns:3;font-size:14px;padding:0;list-style:none}.psk li{margin-bottom:6px}
+ .pfoot{margin-top:18px;font-size:11px;text-align:center;color:#333}
+ svg{max-width:100%}
+ .psq small{display:block;font-size:13.5px;color:#333}
+}
+</style>
+</head>
+<body>
+<header class="hd"><div class="hd-in">
+<a class="logo" href="https://freenetsave.com/" aria-label="freenetsave home"><svg viewBox="0 0 512 512" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b82f6"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient></defs><rect x="16" y="16" width="480" height="480" rx="112" fill="url(#lg)"/><path d="M150 140 h150 l92 92 a28 28 0 0 1 0 40 l-120 120 a28 28 0 0 1 -40 0 l-92 -92 V160 a20 20 0 0 1 10 -20 z" fill="#fff"/><circle cx="196" cy="186" r="22" fill="url(#lg)"/><path d="M212 286 l40 40 l82 -96" fill="none" stroke="#2563eb" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/><path d="M398 84 l10 26 l26 10 l-26 10 l-10 26 l-10 -26 l-26 -10 l26 -10 z" fill="#f97316"/></svg><span>freenet<b>save</b></span></a>
+<nav><a href="https://freenetsave.com/">Home</a><a href="https://freenetsave.com/#money">Money</a><a href="https://freenetsave.com/#pdf">PDF</a><select class="fns-lang" aria-label="Show this page in your language" translate="no"><option value="">🌐 Language</option><option value="en">English (original)</option><option value="ta">தமிழ் (Tamil)</option><option value="hi">हिन्दी (Hindi)</option><option value="pa">ਪੰਜਾਬੀ (Punjabi)</option><option value="ur">اردو (Urdu)</option><option value="gu">ગુજરાતી (Gujarati)</option><option value="bn">বাংলা (Bengali)</option><option value="si">සිංහල (Sinhala)</option><option value="ml">മലയാളം (Malayalam)</option><option value="te">తెలుగు (Telugu)</option><option value="fr">Français (French)</option><option value="es">Español (Spanish)</option><option value="pt">Português (Portuguese)</option><option value="ar">العربية (Arabic)</option><option value="fa">فارسی (Persian)</option><option value="zh-CN">中文 (Chinese)</option><option value="tl">Tagalog (Filipino)</option><option value="vi">Tiếng Việt (Vietnamese)</option><option value="ko">한국어 (Korean)</option><option value="ja">日本語 (Japanese)</option><option value="de">Deutsch (German)</option><option value="it">Italiano (Italian)</option><option value="ru">Русский (Russian)</option><option value="uk">Українська (Ukrainian)</option><option value="tr">Türkçe (Turkish)</option><option value="pl">Polski (Polish)</option><option value="so">Soomaali (Somali)</option><option value="sw">Kiswahili (Swahili)</option><option value="am">አማርኛ (Amharic)</option></select><a class="cta" href="https://freenetsave.com/contact/">Suggest a tool</a></nav>
+</div></header>
+
+<main id="qmain">
+<section class="hero qhero">
+<div class="hero-tx">
+<p class="crumbs"><a href="/">Math practice</a> › Quiz and test maker</p>
+<h1>Math quiz and test maker</h1>
+<p>Pick a grade, tick the topics you want, choose Easy, Medium or Hard, and make a quiz or test in one click. Take it on screen with instant marking and worked answers, or print it with an answer key. Free, no sign-up, nothing saved.</p>
+<ul class="ticks"><li>Grades 1 to 12</li><li>Mix any topics</li><li>Easy, Medium, Hard</li><li>Print with answer key</li></ul>
+</div>
+</section>
+
+<section class="panel" id="qsetup">
+<p class="qfrom" id="qfrom" style="display:none">This quiz was shared with you. The topics and settings are ready. Press <b>Start</b> to take the same questions.</p>
+<h2 class="qh2">1. Pick a grade</h2>
+<div class="grades qgrades" id="qgrades" role="group" aria-label="Grades"></div>
+
+<div class="qcols">
+<div>
+<div class="qtop"><h2 class="qh2" id="qgH">Topics</h2><span><button type="button" class="qlnk" id="qall">Select all</button> · <button type="button" class="qlnk" id="qnone">Clear all</button></span></div>
+<p class="qhint">2. Tick the topics to include. You can switch grades and add topics from more than one grade.</p>
+<div id="qtopics"></div>
+</div>
+<aside class="qside">
+<h2 class="qh2">3. Choose your settings</h2>
+<p class="qsum" id="qsum"></p>
+<div class="qopt"><span>Questions</span><div id="qn" class="qchips"><button type="button" data-v="10">10</button><button type="button" data-v="15">15</button><button type="button" data-v="20">20</button><button type="button" data-v="30">30</button><button type="button" data-v="40">40</button></div></div>
+<div class="qopt"><span>Level</span><div id="ql" class="qchips"><button type="button" data-v="easy">Easy</button><button type="button" data-v="medium">Medium</button><button type="button" data-v="hard">Hard</button><button type="button" data-v="mixed">Mixed</button></div></div>
+<div class="qopt"><span>Type</span><div id="qm" class="qchips"><button type="button" data-v="quiz">Quiz</button><button type="button" data-v="test">Test</button></div></div>
+<p class="qmdesc" id="qmdesc"></p>
+<div class="qopt"><span>Timer</span><div id="qtm" class="qchips"><button type="button" data-v="0">Off</button><button type="button" data-v="10">10 min</button><button type="button" data-v="20">20 min</button><button type="button" data-v="30">30 min</button><button type="button" data-v="45">45 min</button></div></div>
+<button type="button" class="qbig" id="qstart">Start</button>
+<div class="qrow2"><button type="button" class="qsec" id="qprint">Print it</button><button type="button" class="qsec" id="qlink">Copy link</button></div>
+<label class="qkey"><input type="checkbox" id="pkey" checked> Print an answer key on a separate page</label>
+<p class="qnote">"Copy link" gives a link with the same questions, so a whole class or family can take the same test.</p>
+</aside>
+</div>
+
+<h2 class="qh2 qsh">Or try a ready-made test</h2>
+<div class="qsamples" id="qsamples"></div>
+</section>
+
+<section class="panel" id="qrun" style="display:none">
+<div class="rtop"><button type="button" class="back" id="rback">← Change topics</button><div><h2 id="rtitle"></h2><p id="rsub"></p></div><span class="rclock" id="rclock"></span></div>
+<div class="rpw"><span id="rprog"></span><i><u id="rbar"></u></i></div>
+<p class="rtip">Type numbers like 12, −3.5 or 3/4. Use the minus key for negatives.</p>
+<div id="rlist"></div>
+<button type="button" class="qbig" id="rsubmit">Hand in my test</button>
+</section>
+
+<section class="panel" id="qres" style="display:none">
+<div class="xhead"><div><p class="xlab" id="xtitle"></p><h2>Your score: <span id="xscore"></span> <em id="xpct"></em></h2><p id="xmsg"></p></div>
+<div class="xbtns"><button type="button" class="qbig" id="xagain">New questions, same topics</button><button type="button" class="qsec" id="xsame">Retake the same test</button><button type="button" class="qsec" id="xweak">Practise the topics I missed</button><button type="button" class="qsec" id="xsetup">Change topics</button><button type="button" class="qsec" id="xprint">Print this test</button></div></div>
+<h3 class="qh2">By topic</h3>
+<div id="xtopics" class="xtopics"></div>
+<h3 class="qh2">Worked answers</h3>
+<div id="xreview"></div>
+</section>
+
+<section class="panel qabout">
+<h2>How the quiz and test maker works</h2>
+<p>Every question is made fresh on your device from more than 500 skills that follow the Ontario math curriculum, so each new quiz is different. <b>Easy</b> picks friendlier numbers, <b>Hard</b> picks bigger numbers, negatives, decimals and fractions, and <b>Mixed</b> uses all three levels.</p>
+<p>In a <b>quiz</b>, you check each answer as you go. In a <b>test</b>, you answer everything first and see your mark at the end, with the worked answer for every question and a breakdown by topic.</p>
+<p>Teachers and tutors can print a test with an answer key, or copy a link so everyone gets the same questions. Nothing you type is saved or sent anywhere.</p>
+<p>Want to learn a topic first? Go back to <a href="/">math practice</a> and choose <b>Learn</b>.</p>
+</section>
+</main>
+<div id="qprintout" aria-hidden="true"></div>
+
+<footer class="ft"><div class="ft-in"><div><a href="https://freenetsave.com/">freenetsave.com</a><a href="https://freenetsave.com/about/">About</a><a href="https://freenetsave.com/privacy-policy/">Privacy</a><a href="https://freenetsave.com/contact/">Contact</a></div><span>© 2026 freenetsave.com</span></div></footer>
+<script>(function(){function orig(){var h=location.hostname,m=h.match(/^(.*)\.translate\.goog$/);if(!m)return location.href.split("#")[0];var host=m[1].replace(/--/g,"\u0000").replace(/-/g,".").replace(/\u0000/g,"-");return "https://"+host+location.pathname;}document.addEventListener("change",function(e){var s=e.target;if(!s.classList||!s.classList.contains("fns-lang")||!s.value)return;var u=orig();top.location.href=s.value==="en"?u:"https://translate.google.com/translate?sl=en&tl="+s.value+"&u="+encodeURIComponent(u);});})();</script>
+<script src="/topics.js?v=15"></script>
+<script src="/quiz.js?v=1"></script>
+<script src="/sitenav.js?v=11"></script>
+<script src="/pwa.js?v=1" defer></script>
+</body>
+</html>

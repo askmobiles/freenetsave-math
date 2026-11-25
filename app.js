@@ -17,7 +17,10 @@ var ALL=[];
 
 var LS=window.FNS_LESSONS||{};
 function lessonOf(it){return LS[it.g+"|"+it.t.t]||LS[it.t.t]||[];}
-function gen(){var it=pick(sel.pool),q=it.t.f();q.it=it;return q;}
+var LV="medium",LVN={easy:"Easy",medium:"Medium",hard:"Hard"};try{LV=localStorage.getItem("fnsLevel")||"medium";if(!LVN[LV])LV="medium";}catch(e){}
+function cx(q){var t=String(q.q||"").replace(/<[^>]+>/g," ")+" "+(q.s||String(q.a)),ns=t.match(/\d+(\.\d+)?/g)||[],sc=ns.length*0.5;ns.forEach(function(x){sc+=x.replace(".","").length+(x.indexOf(".")>-1?2:0);});try{sc+=(t.match(/\p{Extended_Pictographic}/gu)||[]).length*0.4;}catch(e){}return sc+((t.match(/[\u2212-]/g)||[]).length+(t.match(/\//g)||[]).length)*1.5;}
+function gen(){var it=pick(sel.pool),q;if(LV==="medium"){q=it.t.f();}else{var c=[];for(var i=0;i<6;i++){var z=it.t.f();c.push([cx(z),Math.random(),z]);}c.sort(function(a,b){return a[0]-b[0]||a[1]-b[1];});q=LV==="easy"?c[R(0,1)][2]:c[R(4,5)][2];}q.it=it;return q;}
+function lvTag(){return sel.label+" \u00b7 "+LVN[LV];}
 function many(k){var seen={},out=[],tries=0;while(out.length<k&&tries<k*40){var q=gen();tries++;if(seen[q.q]&&tries<k*30)continue;seen[q.q]=1;out.push(q);}return out;}
 function show(a){return a.replace(/-/g,M);}
 function ansText(q){return q.s?show(q.s):n(q.a);}
@@ -87,7 +90,7 @@ function setup(){
   $("find").addEventListener("input",render);
 }
 var MD={adaptive:"Miss a question and you get an easier one on the same skill from the grade below. Then you come back and carry on.",learn:"See how to do it, step by step, with worked examples.",practice:"Each question shows how it is worked out. Every round has new questions.",challenge:"60 seconds on the clock. How many can you get?",sheet:"A printable page of questions with an answer key."};
-function setMode(m){mode=m;[].forEach.call($("modes").children,function(b){b.setAttribute("aria-pressed",String(b.dataset.m===m));});$("mdesc").textContent=MD[m];$("plen").style.display=(m==="practice"||m==="adaptive")?"":"none";if($("mix"))$("mix").style.display=(m==="learn"||$("find").value.trim())?"none":"";}
+function setMode(m){mode=m;[].forEach.call($("modes").children,function(b){b.setAttribute("aria-pressed",String(b.dataset.m===m));});$("mdesc").textContent=MD[m];$("plen").style.display=(m==="practice"||m==="adaptive")?"":"none";if($("plev"))$("plev").style.display=m==="learn"?"none":"";if($("mix"))$("mix").style.display=(m==="learn"||$("find").value.trim())?"none":"";}
 function go(){if(mode==="learn"&&sel.pool.length===1)openLearn();else if(mode==="sheet")openSheet();else if(mode==="challenge")startChallenge();else startPractice();}
 function launchOne(items,k){sel={pool:[items[k]],label:"Grade "+items[k].g+" · "+items[k].t.t,list:items,pos:k};go();}
 function launchMix(items,label){sel={pool:items,label:label,list:[],pos:-1};go();}
@@ -142,7 +145,7 @@ function startPractice(){
   ad={level:0,ok:true,base:null,help:0,helpOk:0};
   ch.on=false;idx=0;right=0;results=[];missed=[];list=many(N);
   $("play").classList.remove("ch");
-  $("tag").textContent=sel.label;
+  $("tag").textContent=lvTag();
   screen("play");showQ();
 }
 function dots(){var d=$("dots");d.innerHTML="";d.classList.toggle("many",N>10);for(var i=0;i<N;i++){var e=document.createElement("i");if(results[i]===true)e.className="ok";else if(results[i]===false)e.className="no";else if(i===idx)e.className="now";d.appendChild(e);}}
@@ -191,7 +194,7 @@ function stopClock(){if(ch.timer){clearInterval(ch.timer);ch.timer=null;}if(ch.w
 function startChallenge(){
   ch.on=true;ch.left=60;ch.score=0;ch.streak=0;ch.best=0;ch.count=0;right=0;missed=[];
   $("play").classList.add("ch");
-  $("tag").textContent=sel.label;
+  $("tag").textContent=lvTag();
   screen("play");hud();nextCh();
   ch.end=Date.now()+60000;
   ch.timer=setInterval(function(){ch.left=Math.max(0,Math.ceil((ch.end-Date.now())/1000));hud();if(ch.left<=0)finishChallenge();},250);
@@ -256,7 +259,7 @@ function openSheet(){screen("sheet");buildSheet(true);}
 function buildSheet(fresh){
   var k=+$("sn").value;
   if(fresh||sheetQs.length!==k)sheetQs=many(k);
-  var title="Math: "+sel.label.replace(" \u00b7 ",": ");
+  var title="Math: "+lvTag().replace(" \u00b7 ",": ");
   var h='<div class="sh-top"><h2></h2><span>math.freenetsave.com</span></div>'+
         '<div class="sh-meta"><span>Name<i></i></span><span>Date<i></i></span><span>Score<i class="sm"></i>/ '+k+'</span></div>'+
         '<ol class="sh-q'+($("swork").checked?" work":"")+'">';
@@ -281,6 +284,7 @@ $("again").onclick=function(){if(mode==="challenge")startChallenge();else startP
 $("toSheet").onclick=function(){openSheet();};
 $("modes").addEventListener("click",function(e){var b=e.target.closest("button");if(b)setMode(b.dataset.m);});
 $("plen").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;N=+b.dataset.n;[].forEach.call($("plen").querySelectorAll("button"),function(x){x.setAttribute("aria-pressed",String(x===b));});});
+if($("plev")){[].forEach.call($("plev").querySelectorAll("button"),function(x){x.setAttribute("aria-pressed",String(x.dataset.l===LV));});$("plev").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;LV=b.dataset.l;try{localStorage.setItem("fnsLevel",LV);}catch(er){}[].forEach.call($("plev").querySelectorAll("button"),function(x){x.setAttribute("aria-pressed",String(x===b));});});}
 $("help").onclick=function(){setHelp($("help").getAttribute("aria-expanded")!=="true");};
 $("lback").onclick=toTopics;$("lmore").onclick=examples;$("lprac").onclick=function(){startPractice();};$("lsheet").onclick=function(){openSheet();};
 $("nextT").onclick=function(){launchOne(sel.list,sel.pos+1);};
