@@ -155,10 +155,10 @@ function finish(timeUp){
 
 /* ----- printing ----- */
 function printSheet(){
-  var t=title(),h='<div class="ps"><div class="pst"><h2>'+esc(t)+'</h2><span>Test code '+seed+'</span></div><div class="psm"><span>Name<i></i></span><span>Date<i></i></span><span>Score<i class="sm"></i>/ '+qs.length+'</span></div><ol class="psq">';
+  var t=title(),h='<table class="prt"><thead><tr><td><div class="prh">freenetsave.com · Free math tests and worksheets</div></td></tr></thead><tfoot><tr><td><div class="prf">freenetsave.com</div></td></tr></tfoot><tbody><tr><td><div class="ps"><div class="pst"><h2>'+esc(t)+'</h2><span>Test code '+seed+'</span></div><div class="psm"><span>Name<i></i></span><span>Date<i></i></span><span>Score<i class="sm"></i>/ '+qs.length+'</span></div><ol class="psq">';
   qs.forEach(function(q,i){h+='<li><b>'+(i+1)+'.</b><span>'+q.q+'</span><u></u></li>';});
-  h+='</ol><p class="pfoot">© freenetsave.com · Free to print for home and classroom use. Do not repost online.</p></div>';
-  if($("pkey").checked){h+='<div class="ps pkey"><div class="pst"><h2>Answer key</h2><span>Test code '+seed+'</span></div><ol class="psk">';qs.forEach(function(q,i){h+='<li><b>'+(i+1)+'.</b> '+esc(ansText(q))+'</li>';});h+='</ol><p class="pfoot">© freenetsave.com</p></div>';}
+  h+='</ol><p class="pfoot">© freenetsave.com · Free to print for home and classroom use. Do not repost online.</p></div></td></tr></tbody></table>';
+  if($("pkey").checked){h+='<table class="prt"><thead><tr><td><div class="prh">freenetsave.com · Free math tests and worksheets</div></td></tr></thead><tfoot><tr><td><div class="prf">freenetsave.com</div></td></tr></tfoot><tbody><tr><td><div class="ps pkey"><div class="pst"><h2>Answer key</h2><span>Test code '+seed+'</span></div><ol class="psk">';qs.forEach(function(q,i){h+='<li><b>'+(i+1)+'.</b> '+esc(ansText(q))+'</li>';});h+='</ol><p class="pfoot">© freenetsave.com</p></div></td></tr></tbody></table>';}
   $("qprintout").innerHTML=h;setTimeout(function(){window.print();},60);
 }
 
